@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import cuervoLogo from "../../assets/image/cuervo.png"
 
 const Header = ({logout}) => {
   return (
@@ -33,7 +34,7 @@ const Header = ({logout}) => {
             <div className="container px-0">
                 <nav className="navbar navbar-expand-lg navbar-dark bg-white py-3 px-4">
                     <a href="/dashboard" className="navbar-brand p-0">
-                        <h1 className="text-success m-0"><i class="fa-solid fa-crow"></i>UTVT</h1>
+                        <img src={cuervoLogo} style={{width: '20%',height: '10%'}}/>
                     </a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span className="fa fa-bars"></span>
@@ -42,7 +43,6 @@ const Header = ({logout}) => {
                         <div className="navbar-nav ms-auto py-0">
                             <a href="/dashboard" className="nav-item nav-link active">Inicio</a>
                             <a href="/dashboard" className="nav-item nav-link">Acerca</a>
-                            <a href="/dashboard" className="nav-item nav-link">Contacto</a>
                             <Link to="/encuesta" className="nav-item nav-link">Encuesta</Link>
                         </div>
                         <div className="d-flex align-items-center flex-nowrap pt-xl-0">

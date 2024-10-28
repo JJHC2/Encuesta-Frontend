@@ -1,7 +1,7 @@
 import React from "react";
-import about1 from "../../assets/image/about-2.jpg";
-import about3 from "../../assets/image/about-3.png";
-import fondo from "../../assets/image/fondo.jpg";
+import alumnos from "../../assets/image/alumnos.jpg";
+import fondo from "../../assets/image/utvtfondo.jpg";
+import utvt from "../../assets/image/utvt";
 const Content = ({ name }) => {
   const styles = {
     container: {
@@ -65,12 +65,12 @@ const Content = ({ name }) => {
             >
               <div className="about-img">
                 <img
-                  src={about3}
+                  src={alumnos}
                   className="img-fluid w-100 rounded-top bg-white"
                   alt="About us section 1"
                 />
                 <img
-                  src={about1}
+                  src={utvt}
                   className="img-fluid w-100 rounded-bottom"
                   alt="About us section 2"
                 />
@@ -216,10 +216,13 @@ const Content = ({ name }) => {
                 </div>
                 <div className="service-content text-center p-4">
                   <div className="service-content-inner">
-                    <button className="h4 mb-4 d-inline-flex text-start btn btn-link">
-                      <i className="fas fa-check-circle fa-2x me-2"></i> Mejoras
-                      en las Instalaciones
-                    </button>
+                  <a
+                      href="/dashboard"
+                      className="h4 mb-4 d-inline-flex text-start"
+                    >
+                      <i className="fas fa-university fa-2x me-2"></i> Mejoras en las 
+                      Instalaciones
+                    </a>
                     <p className="mb-4">
                       La encuesta permitirá identificar áreas clave para mejorar
                       las instalaciones de la UTVT y optimizar la experiencia
@@ -244,10 +247,13 @@ const Content = ({ name }) => {
                 </div>
                 <div className="service-content text-center p-4">
                   <div className="service-content-inner">
-                    <button className="h4 mb-4 d-inline-flex text-start btn btn-link">
-                      <i className="fas fa-briefcase fa-2x me-2"></i> Evaluación
+                  <a
+                      href="/dashboard"
+                      className="h4 mb-4 d-inline-flex text-start"
+                    >
+                      <i className="fas fa-university fa-2x me-2"></i> Evaluacion
                       de Oportunidades Laborales
-                    </button>
+                    </a>
                     <p className="mb-4">
                       Se busca identificar los obstáculos que enfrentan los
                       egresados de la UTVT al buscar empleo, para mejorar su

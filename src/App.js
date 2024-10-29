@@ -14,6 +14,9 @@ import AddUser from "./components/AddUser";
 import EditUser from "./components/EditUser";
 import ViewUser from "./components/ViewUser";
 import GestionUsuarios from "./components/Admin/GestionUsuarios";
+import Reportes from "./components/Admin/Reportes/Reportes";
+import RequestPasswordReset from "./Pages/Auth/RequestPasswordReset";
+import ResetPassword from "./Pages/Auth/ResetPassword";
 
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
@@ -66,6 +69,10 @@ function App() {
             )
           }
         />
+        <Route path="/forgot-password" element={<RequestPasswordReset />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+
+
         <Route
           path="/dashboard"
           element={
@@ -86,11 +93,24 @@ function App() {
             )
           }
         />
+
+        {/*RUTAS DE ADMIN */}
         <Route
           path="/admin"
           element={
             isAuthenticated && (role === 1 || role === 3 || role === 4) ? (
               <Admin setAuth={setAuth} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+
+        <Route
+          path="/reportes"
+          element={
+            isAuthenticated && (role === 1 || role === 3 || role === 4) ? (
+              <Reportes setAuth={setAuth} />
             ) : (
               <Navigate to="/" />
             )
@@ -107,7 +127,6 @@ function App() {
             )
           }
         />
-      
         <Route
           path="/admin/add"
           element={

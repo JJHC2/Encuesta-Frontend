@@ -1,19 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import './Styles/Admin.css';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 const Admin = ({ setAuth }) => {
   const [name, setName] = React.useState("");
   const [role, setRole] = React.useState(null);
   const [users, setUsers] = React.useState([]);
+  const [sidebarVisible, setSidebarVisible] = React.useState(true);
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     setAuth(false);
   };
 
   React.useEffect(() => {
+    /**
+     * Función asíncrona para obtener datos del administrador.
+     * Realiza una solicitud GET al endpoint de administrador y establece el nombre y rol del usuario.
+     * Si el rol del usuario es 1 (administrador), también obtiene la lista de usuarios.
+     * 
+     * @async
+     * @function fetchAdminData
+     * @returns {Promise<void>} No retorna ningún valor.
+     * @throws {Error} Muestra un mensaje de error en la consola si la solicitud falla.
+     */
     const fetchAdminData = async () => {
       try {
         const response = await fetch(`${BACKEND_URL}/admin`, {
@@ -38,91 +51,51 @@ const Admin = ({ setAuth }) => {
     fetchAdminData();
   }, []);
 
-  const linkStyle = {
-    color: "#ecf0f1",
-    textDecoration: "none",
-    display: "block",
-    padding: "10px 0",
-    fontSize: "1.1em",
-    marginBottom: "10px",
-    transition: "background-color 0.3s ease",
-  };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      <header style={{
-          backgroundColor: "#333",
-          color: "#fff",
-          padding: "10px 20px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
-        }}
-      >
-        <h1 style={{ margin: 0, fontSize: "1.5em" }}>Panel de Administración</h1>
+    <div className="admin-container">
+      <header className="admin-header">
         <button
-          onClick={logout}
-          style={{
-            backgroundColor: "#d9534f",
-            color: "#fff",
-            padding: "8px 15px",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-            fontSize: "1em",
-            marginTop: "10px",
-          }}
+          className="menu-toggle"
+          onClick={() => setSidebarVisible(!sidebarVisible)}
         >
-          Salir
+          &#9776;
         </button>
+        <h1>Panel de Administración</h1>
+        <div className="header-actions">
+          <input type="text" placeholder="Buscar usuarios..." className="search-input" />
+          <img src="profile.png" alt="Perfil" className="profile-img" />
+          <button type="submit" onClick={logout} className="logout-button">Salir</button>
+        </div>
       </header>
 
-      <div style={{ display: "flex", flex: "1" }}>
-        <aside style={{
-            width: "250px",
-            backgroundColor: "#2c3e50",
-            color: "#fff",
-            padding: "20px",
-            display: "flex",
-            flexDirection: "column",
-            position: "fixed",
-            height: "100%",
-            top: 0,
-            left: 0,
-            zIndex: 1000,
-            overflowY: "auto",
-          }}
-        >
-          <h2 style={{ marginBottom: "20px" }}>Menú</h2>
-          <nav>
-            <Link to="/admin" style={linkStyle}>Inicio</Link>
-            {role === 1 && (
-              <Link to="/gestion" style={linkStyle}>Gestión de Usuarios</Link>
-            )}
-            <Link to="/admin" style={linkStyle}>Generar Reporte</Link>
-            <Link to="/admin" style={linkStyle}>Gestionar Encuestas</Link>
-          </nav>
-        </aside>
+      <aside className={`admin-sidebar ${sidebarVisible ? "visible" : ""}`}>
+        <h2>Menú</h2>
+        <nav>
+          <Link to="/admin">Inicio</Link>
+          {role === 1 && <Link to="/gestion">Gestión de Usuarios</Link>}
+          <Link to="/reportes">Generar Reporte</Link>
+          <Link to="/admin">Gestionar Encuestas</Link>
+          <Link to="/home">Gestionar Preguntas</Link>
+        </nav>
+      </aside>
 
-        <main style={{ flex: 1, marginLeft: "250px", padding: "20px" }}>
-          
-        </main>
-      </div>
+      <main className="admin-main">
+        <div className="admin-cards">
+          <div className="card">
+            <p>Encuestas Realizadas</p>
+            <p></p>
+          </div>
+          <div className="card">
+            <p>Total de Usuarios</p>
+            <p>{users.length}</p>
+          </div>
+        </div>
+        <h1>Graficas</h1>
+      </main>
 
-      <footer style={{
-          backgroundColor: "#333",
-          color: "#fff",
-          padding: "10px 20px",
-          textAlign: "center",
-          position: "relative",
-          bottom: 0,
-          width: "100%",
-        }}
-      >
-        <p>
-          &copy; {new Date().getFullYear()} Panel de Administración. Todos los derechos reservados.
-        </p>
+      <footer className="admin-footer">
+        <p>&copy; {new Date().getFullYear()} Panel de Administración. Todos los derechos reservados.</p>
       </footer>
     </div>
   );

@@ -1,7 +1,6 @@
 import React from "react";
 import alumnos from "../../assets/image/alumnos.jpg";
-import fondo from "../../assets/image/utvtfondo.jpg";
-import utvt from "../../assets/image/utvt";
+
 const Content = ({ name }) => {
   const styles = {
     container: {
@@ -40,7 +39,7 @@ const Content = ({ name }) => {
   return (
     <div>
       <div style={styles.container}>
-        <img src={fondo} alt="Header" style={styles.image} />
+        <img src="" alt="Header" style={styles.image} />
         <div style={styles.caption}>
           <h1 style={styles.title}>¡Bienvenido, {name}!</h1>
           <p style={styles.paragraph}>
@@ -70,7 +69,7 @@ const Content = ({ name }) => {
                   alt="About us section 1"
                 />
                 <img
-                  src={utvt}
+                  src=""
                   className="img-fluid w-100 rounded-bottom"
                   alt="About us section 2"
                 />

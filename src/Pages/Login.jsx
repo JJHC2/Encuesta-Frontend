@@ -119,6 +119,15 @@ const Login = ({ setAuth }) => {
                       </button>
                     </div>
                     <p className="text-sm mt-3 mb-0">
+                      Olvidaste tu Contraseña?{" "}
+                      <a
+                        href="/forgot-password" 
+                        className="text-dark font-weight-bolder"
+                      >
+                        Recuperar contraseña
+                      </a>
+                    </p>
+                    <p className="text-sm mt-3 mb-0">
                       Aun no tienes una cuenta?{" "}
                       <a
                         href="/register"

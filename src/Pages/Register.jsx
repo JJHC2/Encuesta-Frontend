@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
-
+import "../styles/Register.css";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const Register = ({ setAuth }) => {
@@ -51,85 +51,87 @@ const Register = ({ setAuth }) => {
     };
   }, []);
 
+  // Animación para mover las figuras aleatoriamente
+  React.useEffect(() => {
+    const circles = document.querySelectorAll(".circle");
+    const moveCircles = () => {
+      circles.forEach(circle => {
+        const randomX = Math.floor(Math.random() * 10);
+        const randomY = Math.floor(Math.random() * -50);
+        circle.style.transform = `translate(${randomX}vw, ${randomY}vh)`;
+      });
+    };
+
+    const intervalId = setInterval(moveCircles, 1000); // Cambia de posición cada 3 segundos
+    return () => clearInterval(intervalId); // Limpia el intervalo cuando se desmonta
+  }, []);
+
+
   return (
     <Fragment>
+      <div class="circle circle1"></div>
+      <div class="circle circle2"></div>
+      <div class="circle circle3"></div>
+      <div class="circle circle4"></div>
+      <div class="circle circle5"></div>
       <div className="container d-flex justify-content-center align-items-center min-vh-100">
         <div
           className="card shadow-sm"
-          style={{ width: "100%", maxWidth: "400px" }}
+
         >
           <div className="card-body">
-            <h1 className="text-center my-4">Registro</h1>
+            <h1 className="">Registro</h1>
             <form onSubmit={onSubmitForm}>
-              <div className="mb-3">
-                <label
-                  htmlFor="exampleFormControlInput1"
-                  className="form-label"
-                >
-                  Email address
-                </label>
+              <div className="inputGroupReg">
                 <input
                   type="email"
-                  className="form-control"
                   name="email"
-                  id="exampleFormControlInput1"
-                  placeholder="name@example.com"
+                  placeholder="email"
                   value={email}
                   onChange={onChange}
                 />
+
+
               </div>
-              <div className="mb-3">
-                <label
-                  htmlFor="exampleFormControlInput2"
-                  className="form-label"
-                >
-                  Name
-                </label>
+              <br />
+              <div className="inputGroupReg">
                 <input
                   type="text"
-                  className="form-control"
+
                   name="name"
-                  id="exampleFormControlInput2"
                   placeholder="name"
                   value={name}
                   onChange={onChange}
                 />
+
               </div>
-              <div className="mb-3">
-                <label
-                  htmlFor="exampleFormControlInput3"
-                  className="form-label"
-                >
-                  Password
-                </label>
+              <br />
+              <div className="inputGroupReg">
+
                 <input
                   type="password"
-                  className="form-control"
+
                   name="password"
                   id="exampleFormControlInput3"
-                  placeholder="Password"
+                  placeholder="password"
                   value={password}
                   onChange={onChange}
                 />
               </div>
-              <div className="mb-3">
-                <label
-                  htmlFor="exampleFormControlInput4"
-                  className="form-label"
-                >
-                  Matricula
-                </label>
+              <br />
+              <div className="inputGroupReg">
+
                 <input
                   type="number"
-                  className="form-control"
+
                   name="matricula"
                   id="exampleFormControlInput4"
-                  placeholder="Matricula"
+                  placeholder="matricula"
                   value={matricula}
                   onChange={onChange}
                 />
               </div>
-             <button type="submit">Registarse</button>
+              <button type="submit" className="buttonRegistro">Registrarse</button>
             </form>
             <Link to="/login">Login</Link>
           </div>

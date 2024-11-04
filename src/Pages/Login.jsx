@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, use } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Login.css";
 import logo from "../assets/image/logo.png";
@@ -17,6 +17,8 @@ const Login = ({ setAuth }) => {
   });
 
   const { email, password } = inputs;
+
+  
 
   const onChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -58,46 +60,72 @@ const Login = ({ setAuth }) => {
     };
   }, []);
 
+  // Animación para mover las figuras aleatoriamente
+  React.useEffect(() => {
+    const circles = document.querySelectorAll(".circle");
+    const moveCircles = () => {
+      circles.forEach(circle => {
+        const randomX = Math.floor(Math.random() * -10);
+        const randomY = Math.floor(Math.random() * -50);
+        circle.style.transform = `translate(${randomX}vw, ${randomY}vh)`;
+      });
+    };
+
+    const intervalId = setInterval(moveCircles, 1000); // Cambia de posición cada 3 segundos
+    return () => clearInterval(intervalId); // Limpia el intervalo cuando se desmonta
+  }, []);
+
   return (
+    
+
+
     <Fragment>
+          <div class="circle circle1"></div>
+    <div class="circle circle2"></div>
+    <div class="circle circle3"></div>
+    <div class="circle circle4"></div>
+    <div class="circle circle5"></div>
       <ToastContainer transition={Flip} />
       <div className="screen-1">
         <img src={logo} className="logo" alt="logo" />
         <form onSubmit={onSubmitForm}>
-          <div className="email">
-            <label htmlFor="email">Email Address</label>
-            <div className="sec-2">
-              <i className="fa-regular fa-user"></i>
+        
+        <div className="inputGroup">
               <input
+                required
                 type="email"
-                name="email"
-                placeholder="Username@gmail.com"
+                name="email"                
                 value={email}
-                onChange={onChange}
+                onChange={onChange}                
               />
-            </div>
-          </div>
-          <div className="password">
-            <label htmlFor="password">Password</label>
-            <div className="sec-2">
-              <i className="fa-solid fa-lock"></i>
+              <label htmlFor="email">email</label>
+        </div>
+   
+          <br />
+          <div className="inputGroup">
               <input
+              required
                 className="pas"
                 type="password"
-                name="password"
-                placeholder="············"
+                name="password"                
                 value={password}
                 onChange={onChange}
               />
-            </div>
-          </div>
-          <button type="submit" className="login">Login</button>
+             <label htmlFor="password">password</label>
+        </div>
+          
+          <br />
+          <button type="submit" className="button">Login</button>
+          
           <div className="footer">
+            
             <Link className="footer" to="/register">Registrarse</Link>
           </div>
         </form>
       </div>
+      
     </Fragment>
+    
   );
 };
 

@@ -1,9 +1,7 @@
-import React, { Fragment, useState } from "react";
-import { toast, ToastContainer, Flip } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import fondo from "../assets/image/utvtfondo.jpg";
-//Usar variable de entrono
-
+import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import cuervo from "../assets/image/cuervo.png";
+import { Link } from "react-router-dom";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const Login = ({ setAuth }) => {
@@ -45,201 +43,107 @@ const Login = ({ setAuth }) => {
     }
   };
 
-  React.useEffect(() => {
-    document.body.classList.add("login-body");
-    return () => {
-      document.body.classList.remove("login-body");
-    };
-  }, []);
-
   return (
-    <Fragment>
-      <ToastContainer transition={Flip} />
-      <main className="main-content  mt-0">
-        <div
-          className="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg"
-          style={{
-            backgroundImage: `url(${fondo})`,
-            backgroundPosition: "top",
-            backgroundSize: "cover",
-          }}
-        >
-          <span className="mask bg-gradient-dark opacity-6"></span>
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-lg-5 text-center mx-auto">
-                <h1 className="text-white mb-2 mt-5">Bienvenido!</h1>
-                <p className="text-lead text-white">
-                  Inicia sesión en tu cuenta ahora mismo para acceder a todos
-                  los recursos y oportunidades que nuestra plataforma tiene para
-                  ti.
-                </p>
-              </div>
+    <div className="position-relative">
+      <div className="authentication-wrapper authentication-basic container-p-y">
+        <div className="authentication-inner py-6 mx-4">
+          <ToastContainer />
+          <div className="card p-7">
+            <div className="app-brand justify-content-center mt-5">
+              <img
+                src={cuervo}
+                alt="cuervo"
+                className="img-fluid"
+                style={{ maxWidth: "150px" }}
+              />
             </div>
-          </div>
-        </div>
-        <div className="container">
-          <div className="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
-            <div className="col-xl-4 col-lg-5 col-md-7 mx-auto">
-              <div className="card z-index-0">
-                <div className="card-header text-center pt-4">
-                  <h5>Iniciar Sesión</h5>
-                </div>
-                <div className="card-body">
-                  <form onSubmit={onSubmitForm}>
-                    <div className="mb-3">
-                      <input
-                        type="email"
-                        className="form-control"
-                        placeholder="Email"
-                        aria-label="Email"
-                        name="email"
-                        value={email}
-                        onChange={onChange}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <input
-                        type="password"
-                        className="form-control"
-                        placeholder="Password"
-                        aria-label="Password"
-                        name="password"
-                        value={password}
-                        onChange={onChange}
-                      />
-                    </div>
 
-                    <div className="text-center">
-                      <button
-                        type="submit"
-                        className="btn bg-gradient-dark w-100 my-4 mb-2"
-                      >
-                        Iniciar Sesión
-                      </button>
-                    </div>
-                    <p className="text-sm mt-3 mb-0">
-                      Olvidaste tu Contraseña?{" "}
-                      <a
-                        href="/forgot-password" 
-                        className="text-dark font-weight-bolder"
-                      >
-                        Recuperar contraseña
-                      </a>
-                    </p>
-                    <p className="text-sm mt-3 mb-0">
-                      Aun no tienes una cuenta?{" "}
-                      <a
-                        href="/register"
-                        className="text-dark font-weight-bolder"
-                      >
-                        Registrate
-                      </a>
-                    </p>
-                  </form>
+            <div className="card-body mt-1">
+              <h4 className="mb-1">Bienvenido! 👋🏻</h4>
+              <p className="mb-5">
+                Porfavor ingresa tus credenciales para acceder a la plataforma.
+              </p>
+
+              <form
+                id="formAuthentication"
+                className="mb-5"
+                onSubmit={onSubmitForm}
+              >
+                <div className="form-floating form-floating-outline mb-5">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="email"
+                    name="email"
+                    value={email}
+                    onChange={onChange}
+                    placeholder="Enter your email or username"
+                    autofocus
+                  />
+                  <label for="email">Email or Username</label>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-      <footer className="footer py-5" style={{ backgroundColor: "white" }}>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mb-4 mx-auto text-center">
-              <a
-                href="/login"
-                target="_blank"
-                class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2"
-              >
-                Company
-              </a>
-              <a
-                href="/login"
-                target="_blank"
-                class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2"
-              >
-                About Us
-              </a>
-              <a
-                href="/login"
-                target="_blank"
-                class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2"
-              >
-                Team
-              </a>
-              <a
-                href="/login"
-                target="_blank"
-                class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2"
-              >
-                Products
-              </a>
-              <a
-                href="/login"
-                target="_blank"
-                class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2"
-              >
-                Blog
-              </a>
-              <a
-                href="/login"
-                target="_blank"
-                class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2"
-              >
-                Pricing
-              </a>
-            </div>
-            <div class="col-lg-8 mx-auto text-center mb-4 mt-2">
-              <a
-                href="/login"
-                target="_blank"
-                class="text-secondary me-xl-4 me-4"
-              >
-                <span class="text-lg fab fa-dribbble"></span>
-              </a>
-              <a
-                href="/login"
-                target="_blank"
-                class="text-secondary me-xl-4 me-4"
-              >
-                <span class="text-lg fab fa-twitter"></span>
-              </a>
-              <a
-                href="/login"
-                target="_blank"
-                class="text-secondary me-xl-4 me-4"
-              >
-                <span class="text-lg fab fa-instagram"></span>
-              </a>
-              <a
-                href="/login"
-                target="_blank"
-                class="text-secondary me-xl-4 me-4"
-              >
-                <span class="text-lg fab fa-pinterest"></span>
-              </a>
-              <a
-                href="/login"
-                target="_blank"
-                class="text-secondary me-xl-4 me-4"
-              >
-                <span class="text-lg fab fa-github"></span>
-              </a>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-8 mx-auto text-center mt-1">
-              <p className="mb-0 text-secondary">
-                Copyright ©{" "}
-                <script>document.write(new Date().getFullYear())</script> Raven
-                Code
+                <div className="mb-5">
+                  <div className="form-password-toggle">
+                    <div className="input-group input-group-merge">
+                      <div className="form-floating form-floating-outline">
+                        <input
+                          type="password"
+                          id="password"
+                          className="form-control"
+                          name="password"
+                          onChange={onChange}
+                          value={password}
+                          placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                          aria-describedby="password"
+                        />
+                        <label for="password">Password</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="mb-5 pb-2 d-flex justify-content-between pt-2 align-items-center">
+                  <label>Olvidaste tu Contraseña?</label>
+                  <a href="/forgot-password" className="float-end mb-1">
+                    <span>Recuperar Contraseña?</span>
+                  </a>
+                </div>
+                <div className="mb-5">
+                  <button
+                    className="btn btn-success d-grid w-100"
+                    type="submit"
+                  >
+                    login
+                  </button>
+                </div>
+              </form>
+
+              <p className="text-center mb-5">
+                <span>No tienes una cuenta?</span>
+                <Link to="/register">Registrarse</Link>
               </p>
             </div>
           </div>
+          <img
+            src="../assets/img/illustrations/tree-3.png"
+            alt="auth-tree"
+            className="authentication-image-object-left d-none d-lg-block"
+          />
+          <img
+            src="../assets/img/illustrations/auth-basic-mask-light.png"
+            className="authentication-image d-none d-lg-block"
+            height="172"
+            alt="triangle-bg"
+            data-app-light-img="illustrations/auth-basic-mask-light.png"
+            data-app-dark-img="illustrations/auth-basic-mask-dark.png"
+          />
+          <img
+            src="../assets/img/illustrations/tree.png"
+            alt="auth-tree"
+            className="authentication-image-object-right d-none d-lg-block"
+          />
         </div>
-      </footer>
-    </Fragment>
+      </div>
+    </div>
   );
 };
 

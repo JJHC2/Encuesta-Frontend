@@ -1,33 +1,8 @@
-import React, { Fragment, useState, useEffect } from "react";
-import Header from "./Layouts/Header";
-import Content from "./Layouts/Content";
-import Footer from "./Layouts/Footer";
-import { Flip,ToastContainer } from "react-toastify";
+import React, { Fragment, useEffect } from "react";
+import {Link} from "react-router-dom";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 const Dashboard = ({ setAuth }) => {
-  const [name, setName] = useState("");
-  
-  async function getName() {
-    try {
-      const response = await fetch(`${BACKEND_URL}/dashboard`, {
-        method: "GET",
-        headers: { token: localStorage.token },
-      });
-
-      const parseRes = await response.json();
-
-      
-      if (response.status === 401) {
-        setAuth(false); 
-        return;
-      }
-      setName(parseRes.user_name); 
-    } catch (err) {
-      console.error("Error", err.message);
-    }
-  }
-
+ 
   const logout =() =>{
     localStorage.removeItem("token");
     localStorage.removeItem("role");
@@ -35,19 +10,15 @@ const Dashboard = ({ setAuth }) => {
   }  
 
   
-
-  
-
-  useEffect(() => {
-    getName();
-  }, []);
-
   return (
     <Fragment>
-      <Header logout={logout} />
-      <ToastContainer transition={Flip}/>
-      <Content name={name}/>
-      <Footer />
+      <h1>Esta es la pantalla principal de user</h1>
+
+      {/*AQUI ESTAN LOS ENLACES PARA LAS DIFERENTES SECCIONES */}
+      <Link to="/encuesta">Encuesta</Link>
+
+
+      <button onClick={e => logout()}>Logout</button>
     </Fragment>
   );
 };

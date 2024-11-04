@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import {Link } from "react-router-dom";
+import cuervo from '../../assets/image/cuervo.png';
 const ResetPassword = () => {
   const { token } = useParams();
   const [newPassword, setNewPassword] = useState("");
@@ -24,76 +26,72 @@ const ResetPassword = () => {
     }
   };
 
-  const styles = {
-    container: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      minHeight: '100vh',
-      backgroundColor: '#f4f4f4',
-      padding: '20px',
-    },
-    formContainer: {
-      background: '#fff',
-      borderRadius: '8px',
-      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-      padding: '40px',
-      width: '400px',
-    },
-    formTitle: {
-      textAlign: 'center',
-      marginBottom: '20px',
-      fontFamily: 'Arial, sans-serif',
-      color: '#333',
-    },
-    formGroup: {
-      marginBottom: '20px',
-    },
-    label: {
-      display: 'block',
-      marginBottom: '8px',
-      fontWeight: 'bold',
-    },
-    inputField: {
-      width: '100%',
-      padding: '10px',
-      border: '1px solid #ccc',
-      borderRadius: '4px',
-      fontSize: '16px',
-    },
-    submitButton: {
-      width: '100%',
-      padding: '10px',
-      backgroundColor: '#4a90e2',
-      color: '#fff',
-      border: 'none',
-      borderRadius: '4px',
-      fontSize: '16px',
-      cursor: 'pointer',
-    },
-  };
   
   return (
-    <div style={styles.container}>
-    <ToastContainer />
-    <div style={styles.formContainer}>
-      <h2 style={styles.formTitle}>Restablecer Contraseña</h2>
-      <form onSubmit={handleSubmit}>
-        <div style={styles.formGroup}>
-          <label htmlFor="newPassword" style={styles.label}>Nueva Contraseña:</label>
-          <input
-            id="newPassword"
-            type="password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            required
-            style={styles.inputField}
+    <div className="position-relative">
+      <div className="authentication-wrapper authentication-basic container-p-y">
+        <div className="authentication-inner py-6 mx-4">
+          <ToastContainer />
+          <div className="card p-7">
+            <div className="app-brand justify-content-center mt-5">
+              <img
+                src={cuervo}
+                alt="cuervo"
+                className="img-fluid"
+                style={{ maxWidth: "150px" }}
+              />
+            </div>
+
+            <div className="card-body mt-1">
+              <h4 className="mb-1">Actualización de contraseña 🔒</h4>
+              <p className="mb-5">
+                Ingresa tu nueva contraseña para restablecer tu cuenta.
+              </p>
+              <form
+                id="formAuthentication"
+                className="mb-5"
+                onSubmit={handleSubmit}
+              >
+                <div className="form-floating form-floating-outline mb-5">
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="newPassword"
+                    name="newPassword"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="Enter your new password"
+                    autofocus
+                  />
+                  <label>Password</label>
+                </div>
+                <button type="submit" className="btn btn-primary d-grid w-100 mb-5">
+                  Restablecer contraseña
+                </button>
+              </form>
+            </div>
+          </div>
+          <img
+            src="../assets/img/illustrations/tree-3.png"
+            alt="auth-tree"
+            className="authentication-image-object-left d-none d-lg-block"
+          />
+          <img
+            src="../assets/img/illustrations/auth-basic-mask-light.png"
+            className="authentication-image d-none d-lg-block"
+            height="172"
+            alt="triangle-bg"
+            data-app-light-img="illustrations/auth-basic-mask-light.png"
+            data-app-dark-img="illustrations/auth-basic-mask-dark.png"
+          />
+          <img
+            src="../assets/img/illustrations/tree.png"
+            alt="auth-tree"
+            className="authentication-image-object-right d-none d-lg-block"
           />
         </div>
-        <button type="submit" style={styles.submitButton}>Restablecer Contraseña</button>
-      </form>
+      </div>
     </div>
-  </div>
   );
 };
 

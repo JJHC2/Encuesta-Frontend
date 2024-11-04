@@ -8,16 +8,14 @@ import React, { useState, useEffect } from "react";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Dashboard from "./Pages/Dashboard";
-import Encuesta from "./Pages/Encuesta";
 import Admin from "./components/Admin";
 import AddUser from "./components/AddUser";
 import EditUser from "./components/EditUser";
 import ViewUser from "./components/ViewUser";
 import GestionUsuarios from "./components/Admin/GestionUsuarios";
-import Reportes from "./components/Admin/Reportes/Reportes";
 import RequestPasswordReset from "./Pages/Auth/RequestPasswordReset";
 import ResetPassword from "./Pages/Auth/ResetPassword";
-
+import EncuestaForm from "./EncuestaMain/EncuestaForm";
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
   const [role, setRole] = useState(null);
@@ -87,7 +85,7 @@ function App() {
           path="/encuesta"
           element={
             isAuthenticated && role === 2 ? (
-              <Encuesta setAuth={setAuth} />
+              <EncuestaForm setAuth={setAuth} />
             ) : (
               <Navigate to="/" />
             )
@@ -106,16 +104,7 @@ function App() {
           }
         />
 
-        <Route
-          path="/reportes"
-          element={
-            isAuthenticated && (role === 1 || role === 3 || role === 4) ? (
-              <Reportes setAuth={setAuth} />
-            ) : (
-              <Navigate to="/" />
-            )
-          }
-        />
+      
 
         <Route
           path="/gestion"

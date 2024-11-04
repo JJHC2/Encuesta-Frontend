@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import EncuestaHeader from "./Encuesta/EncuestaHeader";
 import { Button, Form, Row, Col } from "react-bootstrap";
-import EncuestaFooter from "./Encuesta/EncuestaFooter";
-import EncuestaImage from "./Encuesta/EncuestaImage";
+
 const Encuesta = () => {
   const [formData, setFormData] = useState({
     capacidadDocentes: "",
@@ -37,8 +35,7 @@ const Encuesta = () => {
 
   return (
     <div>
-      <EncuestaHeader />
-      <EncuestaImage/>
+      
       <div className="container my-5">
         <h2 className="text-center mb-4">Encuesta de Satisfacción</h2>
         <p className="text-center text-muted mb-5">
@@ -1107,7 +1104,6 @@ participaría, proporciona una forma de contactarlo*/}
           </div>
         </Form>
       </div>
-      <EncuestaFooter />
     </div>
   );
 };

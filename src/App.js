@@ -8,8 +8,15 @@ import React, { useState, useEffect } from "react";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Dashboard from "./Pages/Dashboard";
-import Admin from "./Pages/Admin";
 import Encuesta from "./Pages/Encuesta";
+import Admin from "./components/Admin";
+import AddUser from "./components/AddUser";
+import EditUser from "./components/EditUser";
+import ViewUser from "./components/ViewUser";
+import GestionUsuarios from "./components/Admin/GestionUsuarios";
+import Reportes from "./components/Admin/Reportes/Reportes";
+import RequestPasswordReset from "./Pages/Auth/RequestPasswordReset";
+import ResetPassword from "./Pages/Auth/ResetPassword";
 
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
@@ -18,9 +25,6 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const userRole = localStorage.getItem("role");
-
-    console.log("Token:", token);
-    console.log("User Role:", userRole);
 
     if (token) {
       setAuthenticated(true);
@@ -33,7 +37,7 @@ function App() {
 
   const setAuth = (authStatus, userRole) => {
     setAuthenticated(authStatus);
-    setRole(userRole); 
+    setRole(userRole);
   };
 
   const redirectTo = () => {
@@ -55,7 +59,6 @@ function App() {
             )
           }
         />
-
         <Route
           path="/register"
           element={
@@ -66,6 +69,9 @@ function App() {
             )
           }
         />
+        <Route path="/forgot-password" element={<RequestPasswordReset />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+
 
         <Route
           path="/dashboard"
@@ -77,7 +83,6 @@ function App() {
             )
           }
         />
-
         <Route
           path="/encuesta"
           element={
@@ -88,6 +93,8 @@ function App() {
             )
           }
         />
+
+        {/*RUTAS DE ADMIN */}
         <Route
           path="/admin"
           element={
@@ -99,6 +106,45 @@ function App() {
           }
         />
 
+        <Route
+          path="/reportes"
+          element={
+            isAuthenticated && (role === 1 || role === 3 || role === 4) ? (
+              <Reportes setAuth={setAuth} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+
+        <Route
+          path="/gestion"
+          element={
+            isAuthenticated && role === 1 ? (
+              <GestionUsuarios setAuth={setAuth} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route
+          path="/admin/add"
+          element={
+            isAuthenticated && role === 1 ? <AddUser /> : <Navigate to="/" />
+          }
+        />
+        <Route
+          path="/admin/edit/:id"
+          element={
+            isAuthenticated && role === 1 ? <EditUser /> : <Navigate to="/" />
+          }
+        />
+        <Route
+          path="/admin/view/:id"
+          element={
+            isAuthenticated && role === 1 ? <ViewUser /> : <Navigate to="/" />
+          }
+        />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>

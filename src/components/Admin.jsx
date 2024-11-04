@@ -1,14 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import './Styles/Admin.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./Styles/Admin.css";
+import JobCharts from "../libs/JobCharts";
+import generatePDF from "../libs/PDF/generatePDF";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+const BACKEND_URL =
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+
 const Admin = ({ setAuth }) => {
   const [name, setName] = React.useState("");
   const [role, setRole] = React.useState(null);
   const [users, setUsers] = React.useState([]);
   const [sidebarVisible, setSidebarVisible] = React.useState(true);
+  const [encuesta, setEncuesta] = React.useState([]);
+  const [jobData, setJobData] = React.useState({ yes: 0, no: 0 });
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -17,16 +24,6 @@ const Admin = ({ setAuth }) => {
   };
 
   React.useEffect(() => {
-    /**
-     * Función asíncrona para obtener datos del administrador.
-     * Realiza una solicitud GET al endpoint de administrador y establece el nombre y rol del usuario.
-     * Si el rol del usuario es 1 (administrador), también obtiene la lista de usuarios.
-     * 
-     * @async
-     * @function fetchAdminData
-     * @returns {Promise<void>} No retorna ningún valor.
-     * @throws {Error} Muestra un mensaje de error en la consola si la solicitud falla.
-     */
     const fetchAdminData = async () => {
       try {
         const response = await fetch(`${BACKEND_URL}/admin`, {
@@ -43,6 +40,21 @@ const Admin = ({ setAuth }) => {
           });
           setUsers(usersResponse.data);
         }
+
+        if (parseRes.role_id === 1 || parseRes.role_id === 2) {
+          const getCountJob = await axios.get(`${BACKEND_URL}/admin/countjob`, {
+            headers: { token: localStorage.token },
+          });
+          setEncuesta(getCountJob.data[0].count);
+        }
+
+        const jobDataResponse = await axios.get(
+          `${BACKEND_URL}/admin/jobdata`,
+          {
+            headers: { token: localStorage.token },
+          }
+        );
+        setJobData(jobDataResponse.data);
       } catch (err) {
         console.error("Error", err.message);
       }
@@ -51,51 +63,93 @@ const Admin = ({ setAuth }) => {
     fetchAdminData();
   }, []);
 
-
   return (
-    <div className="admin-container">
-      <header className="admin-header">
+    <div className="container-fluid">
+      <header className="d-flex justify-content-between align-items-center py-3 border-bottom">
         <button
-          className="menu-toggle"
+          className="btn btn-primary"
           onClick={() => setSidebarVisible(!sidebarVisible)}
         >
-          &#9776;
+          &#9776; Menú
         </button>
         <h1>Panel de Administración</h1>
-        <div className="header-actions">
-          <input type="text" placeholder="Buscar usuarios..." className="search-input" />
-          <img src="profile.png" alt="Perfil" className="profile-img" />
-          <button type="submit" onClick={logout} className="logout-button">Salir</button>
+        <div className="d-flex align-items-center">
+          <img
+            src="profile.png"
+            alt="Perfil"
+            className="rounded-circle"
+            width="40"
+          />
+          <button onClick={logout} className="btn btn-danger ms-3">
+            Salir
+          </button>
         </div>
       </header>
 
-      <aside className={`admin-sidebar ${sidebarVisible ? "visible" : ""}`}>
-        <h2>Menú</h2>
-        <nav>
-          <Link to="/admin">Inicio</Link>
-          {role === 1 && <Link to="/gestion">Gestión de Usuarios</Link>}
-          <Link to="/reportes">Generar Reporte</Link>
-          <Link to="/admin">Gestionar Encuestas</Link>
-          <Link to="/home">Gestionar Preguntas</Link>
-        </nav>
-      </aside>
+      <div className="row">
+        <aside
+          className={`col-md-3 bg-light p-4 ${sidebarVisible ? "" : "d-none"}`}
+        >
+          <h2>Menú</h2>
+          <nav className="nav flex-column">
+            <Link className="nav-link" to="/admin">
+              Inicio
+            </Link>
+            {role === 1 && (
+              <Link className="nav-link" to="/gestion">
+                Gestión de Usuarios
+              </Link>
+            )}
+            <Link className="nav-link" to="/admin">
+              Gestionar Encuestas
+            </Link>
+            <Link className="nav-link" to="/home">
+              Gestionar Preguntas
+            </Link>
+          </nav>
+        </aside>
 
-      <main className="admin-main">
-        <div className="admin-cards">
-          <div className="card">
-            <p>Encuestas Realizadas</p>
-            <p></p>
+        <main className="col-md-9">
+          <div className="row my-4">
+            <div className="col-md-6">
+              <div className="card bg-info text-white text-center">
+                <div className="card-body">
+                  <h5 className="card-title">Alumnos Con Trabajo</h5>
+                  <p className="card-text fs-3">{encuesta}</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="card bg-success text-white text-center">
+                <div className="card-body">
+                  <h5 className="card-title">Total de Usuarios</h5>
+                  <p className="card-text fs-3">{users.length}</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="card">
-            <p>Total de Usuarios</p>
-            <p>{users.length}</p>
-          </div>
-        </div>
-        <h1>Graficas</h1>
-      </main>
 
-      <footer className="admin-footer">
-        <p>&copy; {new Date().getFullYear()} Panel de Administración. Todos los derechos reservados.</p>
+          <h1>Estadisticas</h1>
+          <div className="row my-4">
+            <div className="col-md-12">
+              <div className="card-body">
+                <button onClick={generatePDF} className="btn btn-primary mt-3">
+                  <i class="fa-solid fa-file"></i>
+                </button>
+                <div id="pdf-content">
+                  <JobCharts jobData={jobData} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+
+      <footer className="text-center py-4 mt-auto border-top">
+        <p>
+          &copy; {new Date().getFullYear()} Panel de Administración. Todos los
+          derechos reservados.
+        </p>
       </footer>
     </div>
   );

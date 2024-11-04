@@ -51,75 +51,72 @@ const EditUser = () => {
   };
 
   return (
-    <div className="app flex flex-col md:flex-row">
-    <ToastContainer />
-    <div className="sidebar bg-gray-800 text-white p-5 md:w-1/4 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-semibold mb-4 text-center">Panel de Administración</h2>
-      <Link
-        to="/gestion"
-        className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-300 w-full text-center"
-      >
-        Regresar
-      </Link>
-    </div>
+    <div className="d-flex flex-column flex-md-row">
+      <ToastContainer />
+      <div className="sidebar bg-dark text-white p-4 col-md-3 rounded shadow-lg">
+        <h2 className="text-center h4 mb-4">Panel de Administración</h2>
+        <Link to="/gestion" className="btn btn-success w-100 text-white">
+          Regresar
+        </Link>
+      </div>
 
-    <div className="content flex-1 p-5">
-      <h2 className="text-3xl font-bold text-center text-gray-800 mb-5">Editar Usuario</h2>
-      <form className="bg-white p-5 rounded-lg shadow-md" onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <input
-            type="text"
-            placeholder="Nombre"
-            name="user_name"
-            className="form-control border border-gray-300 p-2 rounded-md w-full"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <input
-            type="email"
-            placeholder="Email"
-            className="form-control border border-gray-300 p-2 rounded-md w-full"
-            name="user_email"
-            value={userEmail}
-            onChange={(e) => setUserEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <input
-            type="text"
-            placeholder="Matrícula"
-            className="form-control border border-gray-300 p-2 rounded-md w-full"
-            name="user_matricula"
-            value={userMatricula}
-            onChange={(e) => setUserMatricula(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <select
-            name="role_id"
-            value={roleid}
-            className="form-select border border-gray-300 p-2 rounded-md w-full"
-            onChange={(e) => setRoleid(e.target.value)}
-          >
-            <option value="2">Usuario</option>
-            <option value="3">Administrador Nivel 1</option>
-            <option value="4">Administrador Nivel 2</option>
-          </select>
-        </div>
-        <button
-          type="submit"
-          className="btn btn-danger text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 w-full"
+      <div className="content flex-fill p-4">
+        <h2 className="text-center text-secondary mb-4 h2">Editar Usuario</h2>
+        <form
+          className="bg-white p-4 rounded shadow-sm"
+          onSubmit={handleSubmit}
         >
-          Actualizar Usuario
-        </button>
-      </form>
+          <div className="mb-3">
+            <input
+              type="text"
+              placeholder="Nombre"
+              name="user_name"
+              className="form-control"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="email"
+              placeholder="Email"
+              name="user_email"
+              className="form-control"
+              value={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
+              placeholder="Matrícula"
+              name="user_matricula"
+              className="form-control"
+              value={userMatricula}
+              onChange={(e) => setUserMatricula(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <select
+              name="role_id"
+              value={roleid}
+              className="form-select"
+              onChange={(e) => setRoleid(e.target.value)}
+            >
+              <option value="2">Usuario</option>
+              <option value="3">Administrador Nivel 1</option>
+              <option value="4">Administrador Nivel 2</option>
+            </select>
+          </div>
+          <button type="submit" className="btn btn-primary w-100">
+            Actualizar Usuario
+          </button>
+        </form>
+      </div>
     </div>
-  </div>
   );
 };
 

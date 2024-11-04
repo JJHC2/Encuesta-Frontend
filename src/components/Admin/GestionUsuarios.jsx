@@ -12,7 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 
-const GestionUsuarios = ({ setAuth }) => {
+const GestionUsuarios = () => {
   const [name, setName] = useState("");
   const [role, setRole] = useState(null);
   const [users, setUsers] = useState([]);

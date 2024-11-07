@@ -16,6 +16,7 @@ const Dashboard = ({ setAuth }) => {
 
       {/*AQUI ESTAN LOS ENLACES PARA LAS DIFERENTES SECCIONES */}
       <Link to="/encuesta">Encuesta</Link>
+      <Link to="/oferts-job">Ofertas de trabajo disponibles</Link>
 
 
       <button onClick={e => logout()}>Logout</button>

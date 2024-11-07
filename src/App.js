@@ -16,6 +16,8 @@ import GestionUsuarios from "./components/Admin/GestionUsuarios";
 import RequestPasswordReset from "./Pages/Auth/RequestPasswordReset";
 import ResetPassword from "./Pages/Auth/ResetPassword";
 import EncuestaForm from "./EncuestaMain/EncuestaForm";
+import JobOferts from "./components/JobsOferts/JobOferts";
+import './App.css';
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
   const [role, setRole] = useState(null);
@@ -91,6 +93,16 @@ function App() {
             )
           }
         />
+
+        <Route
+        path="/oferts-job"
+        element={
+          isAuthenticated && role === 2 ? (
+            <JobOferts/>
+          ) : (
+            <Navigate to="/" />
+          )
+        }/>
 
         {/*RUTAS DE ADMIN */}
         <Route

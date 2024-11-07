@@ -77,24 +77,6 @@ const RequestPasswordReset = () => {
               </div>
             </div>
           </div>
-          <img
-            src="../assets/img/illustrations/tree-3.png"
-            alt="auth-tree"
-            className="authentication-image-object-left d-none d-lg-block"
-          />
-          <img
-            src="../assets/img/illustrations/auth-basic-mask-light.png"
-            className="authentication-image d-none d-lg-block"
-            height="172"
-            alt="triangle-bg"
-            data-app-light-img="illustrations/auth-basic-mask-light.png"
-            data-app-dark-img="illustrations/auth-basic-mask-dark.png"
-          />
-          <img
-            src="../assets/img/illustrations/tree.png"
-            alt="auth-tree"
-            className="authentication-image-object-right d-none d-lg-block"
-          />
         </div>
       </div>
     </div>

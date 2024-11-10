@@ -1,10 +1,23 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  CssBaseline,
+  Drawer,
+  Box,
+  Button,
+  TextField,
+  MenuItem,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import Sidebar from './templates/Sidebar';
 
-const BACKEND_URL =
-  process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 
 const AddUser = () => {
   const [userName, setUserName] = useState("");
@@ -12,6 +25,14 @@ const AddUser = () => {
   const [userPassword, setUserPassword] = useState("");
   const [userMatricula, setUserMatricula] = useState("");
   const [roleid, setRoleid] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [openUsers, setOpenUsers] = useState(false);
+  const [openSurvey, setOpenSurvey] = useState(false);
+
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const toggleUsersMenu = () => setOpenUsers(!openUsers);
+  const toggleSurveyMenu = () => setOpenSurvey(!openSurvey);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,6 +56,7 @@ const AddUser = () => {
       setUserPassword("");
       setUserMatricula("");
       setRoleid("");
+      navigate("/gestion");
     } catch (error) {
       toast.error("Error al agregar el usuario");
       console.error("Error al agregar usuario:", error);
@@ -42,79 +64,98 @@ const AddUser = () => {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center p-5">
-      <ToastContainer />
-      <h2 className="text-center text-primary display-4 mb-4">
-        Agregar Usuario
-      </h2>
-      <Link to="/gestion" className="text-decoration-none text-secondary mb-3">
-        <i className="bi bi-arrow-left"></i> Volver
-      </Link>
-      <form
-        className="bg-light p-4 rounded shadow-lg w-100 col-md-6"
-        onSubmit={handleSubmit}
-      >
-        <div className="mb-3">
-          <input
-            type="text"
-            placeholder="Nombre"
-            name="user_name"
-            className="form-control"
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <AppBar position="fixed">
+        <Toolbar>
+          <IconButton color="inherit" edge="start" onClick={toggleSidebar}>
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div">
+            Agregar Usuario
+          </Typography>
+        </Toolbar>
+      </AppBar>
+
+      <Drawer open={sidebarOpen} onClose={toggleSidebar}>
+        <Sidebar
+          role={roleid}
+          openUsers={openUsers}
+          toggleUsersMenu={toggleUsersMenu}
+          openSurvey={openSurvey}
+          toggleSurveyMenu={toggleSurveyMenu}
+        />
+      </Drawer>
+
+      <Box component="main" sx={{ flexGrow: 1, p: 3, mt: 8 }}>
+        <ToastContainer />
+        <Typography variant="h4" component="h2" gutterBottom>
+          Agregar Usuario
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            fullWidth
+            label="Nombre"
+            variant="outlined"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
             required
+            margin="normal"
           />
-        </div>
-        <div className="mb-3">
-          <input
+          <TextField
+            fullWidth
+            label="Email"
+            variant="outlined"
             type="email"
-            placeholder="Email"
-            className="form-control"
-            name="user_email"
             value={userEmail}
             onChange={(e) => setUserEmail(e.target.value)}
             required
+            margin="normal"
           />
-        </div>
-        <div className="mb-3">
-          <input
+          <TextField
+            fullWidth
+            label="Contraseña"
+            variant="outlined"
             type="password"
-            placeholder="Contraseña"
-            className="form-control"
-            name="user_password"
             value={userPassword}
             onChange={(e) => setUserPassword(e.target.value)}
             required
+            margin="normal"
           />
-        </div>
-        <div className="mb-3">
-          <input
-            type="number"
-            placeholder="Matrícula"
-            className="form-control"
-            name="user_matricula"
+          <TextField
+            fullWidth
+            label="Matrícula"
+            variant="outlined"
             value={userMatricula}
             onChange={(e) => setUserMatricula(e.target.value)}
             required
+            margin="normal"
           />
-        </div>
-        <div className="mb-3">
-          <select
-            name="role_id"
+          <TextField
+            fullWidth
+            select
+            label="Rol"
             value={roleid}
-            className="form-select"
             onChange={(e) => setRoleid(e.target.value)}
+            variant="outlined"
+            margin="normal"
           >
-            <option value="2">Usuario</option>
-            <option value="3">Administrador Nivel 1</option>
-            <option value="4">Administrador Nivel 2</option>
-          </select>
-        </div>
-        <button type="submit" className="btn btn-primary w-100">
-          Agregar Usuario
-        </button>
-      </form>
-    </div>
+            <MenuItem value="2">Usuario</MenuItem>
+            <MenuItem value="3">Administrador Nivel 1</MenuItem>
+            <MenuItem value="4">Administrador Nivel 2</MenuItem>
+          </TextField>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            sx={{ mt: 2 }}
+          >
+            Agregar Usuario
+          </Button>
+        </form>
+      </Box>
+    </Box>
   );
 };
 

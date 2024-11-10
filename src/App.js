@@ -17,6 +17,9 @@ import RequestPasswordReset from "./Pages/Auth/RequestPasswordReset";
 import ResetPassword from "./Pages/Auth/ResetPassword";
 import EncuestaForm from "./EncuestaMain/EncuestaForm";
 import JobOferts from "./components/JobsOferts/JobOferts";
+import GestionEncuesta from './components/Admin/GestionEncuesta';
+import Profile from "./components/Profile/Profile";
+
 import './App.css';
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
@@ -104,6 +107,18 @@ function App() {
           )
         }/>
 
+
+        {/*RUTA DEL PERFIL */}
+        <Route
+          path="/profile"
+          element={
+            isAuthenticated ? (
+              <Profile/>
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
         {/*RUTAS DE ADMIN */}
         <Route
           path="/admin"
@@ -121,13 +136,22 @@ function App() {
         <Route
           path="/gestion"
           element={
-            isAuthenticated && role === 1 ? (
+            isAuthenticated && (role === 1 || role === 3 || role === 4) ? (
               <GestionUsuarios setAuth={setAuth} />
             ) : (
               <Navigate to="/" />
             )
           }
         />
+        <Route
+        path="/gestion/encuesta"
+        element={
+          isAuthenticated && (role === 1 || role === 3 || role === 4) ?(
+            <GestionEncuesta/>
+          ):(
+            <Navigate to="/" />
+          )
+        }/>
         <Route
           path="/admin/add"
           element={

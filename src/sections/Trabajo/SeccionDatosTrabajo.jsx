@@ -62,7 +62,6 @@ const SeccionDatosTrabajo = ({ formData, HandleInputChange }) => {
           si consideras que tu jefe inmediato participaría, proporciona una
           forma de contactarlo
         </label>
-        <span>Nombre:</span>
         <input
           type="text"
           className="form-control"

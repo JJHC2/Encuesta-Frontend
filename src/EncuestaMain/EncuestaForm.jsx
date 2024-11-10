@@ -95,7 +95,7 @@ const EncuestaForm = () => {
 
   return (
     <div>
-      <div className="container my-5">
+      <div className="">
         <ToastContainer />
         <h2 className="text-center mb-4">Encuesta de Satisfaccion</h2>
         {seccionActual === 1 && (

@@ -1,6 +1,6 @@
 import React from "react";
 import { Chart, registerables } from "chart.js";
-import "./JobCharts.css"; 
+
 
 Chart.register(...registerables);
 
@@ -29,7 +29,7 @@ const JobCharts = ({ jobData }) => {
         },
         options: {
           responsive: true,
-          maintainAspectRatio: false, // Para poder ajustar el tamaño del canvas
+          maintainAspectRatio: false, // Para poder ajustar el tamaño 
           plugins: {
             legend: {
               position: 'top',

@@ -103,9 +103,9 @@ const Login = ({ setAuth }) => {
                 </div>
                 <div className="mb-5 pb-2 d-flex justify-content-between pt-2 align-items-center">
                   <label>Olvidaste tu Contraseña?</label>
-                  <a href="/forgot-password" className="float-end mb-1">
+                  <Link to="/forgot-password" className="float-end mb-1">
                     <span>Recuperar Contraseña?</span>
-                  </a>
+                  </Link>
                 </div>
                 <div className="mb-5">
                   <button

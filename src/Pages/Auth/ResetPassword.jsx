@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
-import {Link } from "react-router-dom";
 import cuervo from '../../assets/image/cuervo.png';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 const ResetPassword = () => {
   const { token } = useParams();
   const [newPassword, setNewPassword] = useState("");
@@ -13,7 +14,7 @@ const ResetPassword = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/auth/reset-password",
+        `${BACKEND_URL}/auth/reset-password`,
         { newPassword, token }
       );
       toast.success("Contraseña restablecida con éxito");

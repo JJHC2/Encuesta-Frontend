@@ -4,8 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import cuervo from "../../assets/image/cuervo.png";
 import { Link } from "react-router-dom";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
-
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const RequestPasswordReset = () => {
   const [email, setEmail] = useState("");
 
@@ -13,7 +12,7 @@ const RequestPasswordReset = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${BACKEND_URL}/auth/forgot-password`,
+      `${BACKEND_URL}/auth/forgot-password`,
         { user_email: email }
       );
       console.log(response.data);

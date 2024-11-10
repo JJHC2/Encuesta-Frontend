@@ -16,6 +16,7 @@ import SeccionInfoInteres from "../sections/InformacionInteres/SeccionInfoIntere
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 
 const EncuestaForm = () => {
   const [formData, setFormData] = useState({});
@@ -25,7 +26,7 @@ const EncuestaForm = () => {
 
   useEffect(() => {
     const checkResponse = async () => {
-      const res = await fetch("http://localhost:5000/dashboard/encuesta/check", {
+      const res = await fetch(`${BACKEND_URL}/dashboard/encuesta/check`, {
         method: "GET",
         headers: {
           token: localStorage.getItem("token"),
@@ -61,7 +62,7 @@ const EncuestaForm = () => {
 
   const HandleSubmit = async () => {
     try {
-      const res = await fetch("http://localhost:5000/dashboard/encuesta", {
+      const res = await fetch(`${BACKEND_URL}/dashboard/encuesta`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

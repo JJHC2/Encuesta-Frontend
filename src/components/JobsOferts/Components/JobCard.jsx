@@ -1,6 +1,10 @@
 import React from 'react';
 
 const JobCard = ({ job }) => {
+  //Validacion si dice anywhere remplazarlo por remoto
+  if (job.jobGeo === "Anywhere") {
+    job.jobGeo = "Remoto";
+  }
   return (
     <div style={styles.card}>
       <div style={styles.header}>

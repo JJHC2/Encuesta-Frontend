@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import JobCard from "./Components/JobCard";
 import "./styles/JobOferts.css";
 const JobOferts = () => {
@@ -8,6 +9,7 @@ const JobOferts = () => {
   const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
   const [currentJobs, setCurrentJobs] = useState([]);
+  const navigate = useNavigate();
 
   const fetchJobs = () => {
     setLoading(true);
@@ -29,7 +31,7 @@ const JobOferts = () => {
 
   useEffect(() => {
     fetchJobs();
-  }, []);  
+  }, []);
 
   useEffect(() => {
     const resultsPerPage = 10;
@@ -46,7 +48,6 @@ const JobOferts = () => {
       </div>
     );
   }
-  
 
   const resultsPerPage = 10;
   const totalPages = Math.ceil(totalResults / resultsPerPage);
@@ -55,31 +56,46 @@ const JobOferts = () => {
     <div className="mainContainer">
       <div className="header">
         <h1 className="title">Trabajos Disponibles</h1>
-        <p className="subtitle">México y Otros Países</p>
+        <p className="subtitle">Encuentra tu próximo empleo remoto en México</p>
+        {/*BOTON REGRSAR AL DASHBOARD */}
+        <button
+          onClick={() => {
+            console.log("Redirigiendo al Dashboard...");
+            navigate("/dashboard");
+          }}
+          className="btn btn-success"
+        >
+          Regresar
+        </button>
       </div>
       <div className="container">
         {currentJobs.length > 0 ? (
-          currentJobs.map((job, index) => (
-            <JobCard key={index} job={job} />
-          ))
+          currentJobs.map((job, index) => <JobCard key={index} job={job} />)
         ) : (
           <p>No se encontraron resultados.</p>
         )}
       </div>
       <div className="pagination">
-        <button onClick={() => setPage(page - 1)} disabled={page === 1} className="pageButton">
+        <button
+          onClick={() => setPage(page - 1)}
+          disabled={page === 1}
+          className="pageButton"
+        >
           Anterior
         </button>
         <span className="pageInfo">
           {page} / {totalPages}
         </span>
-        <button onClick={() => setPage(page + 1)} disabled={page === totalPages} className="pageButton">
+        <button
+          onClick={() => setPage(page + 1)}
+          disabled={page === totalPages}
+          className="pageButton"
+        >
           Siguiente
         </button>
       </div>
     </div>
   );
 };
-
 
 export default JobOferts;

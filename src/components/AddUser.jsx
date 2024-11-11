@@ -58,7 +58,7 @@ const AddUser = () => {
       setRoleid("");
       navigate("/gestion");
     } catch (error) {
-      toast.error("Error al agregar el usuario");
+      toast.error("El usuario ya existe");
       console.error("Error al agregar usuario:", error);
     }
   };

@@ -15,6 +15,7 @@ const PreguntaRadioGroup = ({pregunta,opciones,seleccion,onChange}) => {
                             value={opcion}
                             checked={seleccion === opcion}
                             onChange={(e) => onChange(opcion)}
+                            required
                         />
                     </Col>
                 ))}

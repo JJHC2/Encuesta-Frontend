@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const Navigation = ({
   seccionActual,
@@ -8,73 +9,44 @@ const Navigation = ({
   onSubmit,
   formData,
 }) => {
-  const validateSection = () => {
-    const currentSectionFields = [
-      "capacidadDocentes",
-      "docentesPostgrado",
-      "docentesExperiencia",
-      "contenidosTeoricos",
-      "desarrolloPracticas",
-      "infraestructura",
-      "infraestructuraActividad",
-      "equipamiento",
-      "acceso",
-      "accesoServicios",
-      "suficienciaAcervo",
-      "tutoriaAcademica",
-      "asesoriaMentoria",
-      "movilidad",
-      "becas",
-      "formacionIntegral",
-      "serviciosBiblioteca",
-      "apoyoTitulacion",
-      "tramitesServicioSocial",
-      "serviciosControl",
-      "promocion",
-      "carreraProfesional",
-      "formacion",
-      "cursar",
-      "serviciosocial",
-      "practicas",
-      "aplicacionconocimientos",
-      "ejercicio",
-      "conocimientosnuevos",
-      "contratado",
-      "vincularse",
-      "aplicacionconocimientos",
-      "habilidades",
-      "adquisicion",
-      "contratacion",
-      "opcionesempleo",
-      "recursar",
-      "espacioacademico",
-      "posgradointeres",
-      "trabajas",
-      "conocimientosteoricos",
-      "conocimientospracticos",
-      "dominioingles",
-      "formacioninformatica",
-      "personalidad",
-      "capacidadgestion",
-      "empresa",
-      "regimen",
-      "actividadeslaborales",
-      "fechacontratacion",
-      "nombrejefe",
-      "cargojefe",
-      "correojefe",
-      "telefono",
-      "extencion",
-      "infointeres",
-      "logros",
-    ];
+  const secciones = Object.keys(formData);
+  const [isFormularioCompleto, setIsFormularioCompleto] = useState(false);
 
-    for (let field of currentSectionFields) {
-      if (!formData[field]) {
-        return false;
-      }
+  // Función para verificar si todas las preguntas están completadas en todas las secciones
+  const checkFormulario = () => {
+    const allSectionsComplete = secciones.every((seccion) => {
+      const respuestasSeccion = formData[seccion] || {};
+      // Verifica si alguna pregunta está vacía o no tiene respuesta
+      return Object.values(respuestasSeccion).every(
+        (respuesta) =>
+          respuesta !== "" && respuesta !== undefined && respuesta !== null
+      );
+    });
+    setIsFormularioCompleto(allSectionsComplete);
+  };
+
+  // Ejecuta la validación del formulario cada vez que el formData cambia
+  useEffect(() => {
+    checkFormulario();
+  }, [formData]);
+
+  // Función que maneja el siguiente paso
+  const handleNext = () => {
+    const seccionActualNombre = secciones[seccionActual - 1];
+    const respuestasSeccion = formData[seccionActualNombre] || {};
+
+    // Verifica si hay preguntas pendientes en esta sección
+    const preguntasPendientes = Object.values(respuestasSeccion).some(
+      (respuesta) =>
+        respuesta === "" || respuesta === undefined || respuesta === null
+    );
+
+    if (preguntasPendientes) {
+      toast.error("Completa todas las preguntas de esta sección antes de avanzar");
+      return;
     }
-    return true;
+
+    onNext(); // Avanza al siguiente paso
   };
 
   return (
@@ -92,21 +64,22 @@ const Navigation = ({
       )}
       {seccionActual < totalSecciones ? (
         <button
-          onClick={() => {
-            if (validateSection()) {
-              onNext();
-            } else {
-              alert("Por favor, completa todos los campos antes de continuar.");
-            }
-          }}
-          className="btn btn-danger px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow hover:bg-blue-600 transition duration-200"
+          onClick={handleNext} // Maneja el siguiente paso
+          disabled={!isFormularioCompleto} // Deshabilita si el formulario no está completo
+          className={`btn btn-danger px-4 py-2 ${
+            isFormularioCompleto ? "bg-blue-500" : "bg-gray-400"
+          } text-white font-semibold rounded-lg shadow hover:bg-blue-600 transition duration-200`}
         >
           Siguiente
         </button>
       ) : (
         <button
+          id="submit-button"
           onClick={onSubmit}
-          className="btn btn-primary px-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow hover:bg-green-600 transition duration-200"
+          disabled={!isFormularioCompleto} // Deshabilita si el formulario no está completo
+          className={`btn btn-primary px-4 py-2 ${
+            isFormularioCompleto ? "bg-green-500" : "bg-gray-400"
+          } text-white font-semibold rounded-lg shadow hover:bg-green-600 transition duration-200`}
         >
           Enviar
         </button>

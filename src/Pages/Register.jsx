@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import cuervo from "../assets/image/cuervo.png";
 import { Link } from "react-router-dom";
+import {toast,ToastContainer} from "react-toastify";
 const BACKEND_URL =
   process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 const Register = ({ setAuth }) => {
@@ -33,17 +34,20 @@ const Register = ({ setAuth }) => {
       if (!response.ok) {
         throw new Error(parseRes.message || "Error desconocido");
       }
-
+      toast.success("Usuario registrado con exito")
       localStorage.setItem("token", parseRes.token);
+      localStorage.setItem("role", parseInt(parseRes.role, 10));
       setAuth(true, parseRes.role);
     } catch (err) {
       console.error("Hubo un error", err);
-      alert(err.message || "Error de registro, intenta nuevamente.");
+      toast.error("Error al registrarse")
+      toast.info("Razones del fallo: La matricula o el usuario ya existen , La matricula debe tener 9 caracteres y la contraseña mas de 3")
     }
   };
 
   return (
     <div className="position-relative">
+      <ToastContainer/>
       <div className="authentication-wrapper authentication-basic container-p-y">
         <div className="authentication-inner py-6 mx-4">
           <div className="card p-7">

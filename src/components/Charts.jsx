@@ -16,11 +16,8 @@ const Charts = ({ jobData, encuesta, seccionData, academicData, role }) => {
       return;
     }
 
-    console.log("Datos a generar PDF:", jobData,encuesta);
     const toastId = toast.loading("Generando PDF...");
-
-    // Generar el PDF
-    generatePDF(jobData,encuesta)
+    generatePDF(jobData, encuesta)
       .then(() => {
         toast.update(toastId, {
           render: "PDF generado exitosamente!",
@@ -40,7 +37,7 @@ const Charts = ({ jobData, encuesta, seccionData, academicData, role }) => {
       });
   };
 
-  const HandleGeneratePDFacademico = useCallback(() => {
+  const handleGeneratePDFacademico = useCallback(() => {
     if (!academicData) {
       toast.error("Datos insuficientes para generar el PDF.");
       return;
@@ -66,14 +63,13 @@ const Charts = ({ jobData, encuesta, seccionData, academicData, role }) => {
       });
   }, [academicData]);
 
-  const HandleGenerateExcel = useCallback(() => {
+  const handleGenerateExcel = useCallback(() => {
     if (!seccionData) {
       toast.error("Datos insuficientes para generar el Excel.");
       return;
     }
 
     const toastId = toast.loading("Generando Excel...");
-
     GenerateExcel(seccionData)
       .then(() => {
         toast.update(toastId, {
@@ -107,14 +103,16 @@ const Charts = ({ jobData, encuesta, seccionData, academicData, role }) => {
               <div id="pdf-pie-chart">
                 <JobCharts jobData={jobData} />
               </div>
-              <Button
-                onClick={handleGeneratePDF}
-                variant="contained"
-                color="error"
-                startIcon={<i className="fa-solid fa-file-pdf"></i>}
-              >
-                PDF
-              </Button>
+              {jobData && encuesta && (
+                <Button
+                  onClick={handleGeneratePDF}
+                  variant="contained"
+                  color="error"
+                  startIcon={<i className="fa-solid fa-file-pdf"></i>}
+                >
+                  PDF
+                </Button>
+              )}
             </CardContent>
           </Card>
         </Grid>
@@ -123,17 +121,19 @@ const Charts = ({ jobData, encuesta, seccionData, academicData, role }) => {
           <Card sx={{ borderRadius: 2, boxShadow: 3 }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                Respuestas por seccion
+                Respuestas por sección
               </Typography>
               <SeccionChart seccionData={seccionData} />
-              <Button
-                onClick={HandleGenerateExcel}
-                variant="contained"
-                color="success"
-                startIcon={<i className="fa-solid fa-file-excel"></i>}
-              >
-                EXCEL
-              </Button>
+              {seccionData && (
+                <Button
+                  onClick={handleGenerateExcel}
+                  variant="contained"
+                  color="success"
+                  startIcon={<i className="fa-solid fa-file-excel"></i>}
+                >
+                  EXCEL
+                </Button>
+              )}
             </CardContent>
           </Card>
         </Grid>
@@ -153,14 +153,16 @@ const Charts = ({ jobData, encuesta, seccionData, academicData, role }) => {
                     marginTop: 16,
                   }}
                 >
-                  <Button
-                    onClick={HandleGeneratePDFacademico}
-                    variant="contained"
-                    color="error"
-                    startIcon={<i className="fa-solid fa-file-pdf"></i>}
-                  >
-                    PDF
-                  </Button>
+                  {academicData && (
+                    <Button
+                      onClick={handleGeneratePDFacademico}
+                      variant="contained"
+                      color="error"
+                      startIcon={<i className="fa-solid fa-file-pdf"></i>}
+                    >
+                      PDF
+                    </Button>
+                  )}
                 </div>
               </CardContent>
             </Card>

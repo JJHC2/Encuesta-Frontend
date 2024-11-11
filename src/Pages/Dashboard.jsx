@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import {
   Card,
@@ -11,7 +11,6 @@ import {
   Grid,
   Paper,
 } from "@mui/material";
-import Slider from "react-slick";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import logo from "../assets/image/utvtfondo.jpg";
 import utvtImage from "../assets/image/alumnos.jpg";
@@ -21,10 +20,10 @@ import ofertaeducativa from "../assets/image/Ofertaeducativa.jpg";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#3b5998", // Azul oscuro
+      main: "#3b5998",
     },
     secondary: {
-      main: "#f39c12", // Naranja
+      main: "#f39c12",
     },
     background: {
       default: "#f4f6f9",
@@ -43,109 +42,55 @@ const Dashboard = ({ setAuth }) => {
     setAuth(false);
   };
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 600,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 4000,
-    fade: true,
-  };
-
   return (
     <ThemeProvider theme={theme}>
-      <Box display="flex" minHeight="100vh" bgcolor="background.default">
-        {/* Sidebar estilizado */}
-        <Box
-          sx={{
-            width: { xs: "100%", sm: "250px" }, // Sidebar se oculta en pantallas xs
-            bgcolor: "primary.main",
-            color: "white",
-            p: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            boxShadow: 3,
-            display: { xs: "none", sm: "flex" }, // Oculatar en xs
-          }}
-        >
-          <Typography variant="h5" gutterBottom fontWeight="bold">
-            Menú de Usuario
-          </Typography>
-          <Button
-            component={Link}
-            to="/encuesta"
-            color="inherit"
-            fullWidth
-            sx={{ mb: 2 }}
-          >
-            Encuesta
-          </Button>
-          <Button
-            component={Link}
-            to="/oferts-job"
-            color="inherit"
-            fullWidth
-            sx={{ mb: 2 }}
-          >
-            Ofertas de trabajo
-          </Button>
-          <Button
-            onClick={logout}
-            variant="contained"
-            color="secondary"
-            fullWidth
-            sx={{ mt: 4 }}
-          >
-            Logout
-          </Button>
-        </Box>
-
-        {/* Contenido principal */}
+      <Box display="flex" minHeight="100vh" bgcolor="background.default" p={4}>
         <Box
           flex={1}
-          p={4}
           display="flex"
           flexDirection="column"
           alignItems="center"
+          textAlign="center"
         >
-          {/* Slider Promocional */}
-          <Box sx={{ width: "100%", maxWidth: 1100, mb: 4 }}>
-            <Slider {...sliderSettings}>
-              <Box>
-                <CardMedia
-                  component="img"
-                  height="400"
-                  image={logo}
-                  alt="Imagen de UTVT"
-                />
-              </Box>
-              <Box>
-                <CardMedia
-                  component="img"
-                  height="400"
-                  image={utvtImage}
-                  alt="Otra imagen de UTVT"
-                />
-              </Box>
-            </Slider>
-          </Box>
-
           <Typography
             variant="h4"
             gutterBottom
-            textAlign="center"
             color="primary.main"
             fontWeight="bold"
           >
             Bienvenido a la pantalla principal de usuario
           </Typography>
 
+          {/* Botones de navegación */}
+          <Box mb={4} display="flex" gap={2}>
+            <Button
+              component={Link}
+              to="/encuesta"
+              variant="contained"
+              color="primary"
+            >
+              Encuesta
+            </Button>
+            <Button
+              component={Link}
+              to="/oferts-job"
+              variant="contained"
+              color="primary"
+            >
+              Ofertas de trabajo
+            </Button>
+            <Button
+              onClick={logout}
+              variant="contained"
+              color="secondary"
+            >
+              Logout
+            </Button>
+          </Box>
+
           {/* Grid de Cards Responsivas */}
           <Grid container spacing={4} sx={{ maxWidth: 1200 }}>
-            {/* Card de Opciones */}
+            {/* Card de Modelo Educativo */}
             <Grid item xs={12} sm={6} md={4}>
               <Paper elevation={4} sx={{ borderRadius: 3 }}>
                 <Card sx={{ boxShadow: 4 }}>
@@ -153,21 +98,16 @@ const Dashboard = ({ setAuth }) => {
                     component="img"
                     height="200"
                     image={ofertaeducativa}
-                    alt="Universidad Tecnológica del Valle de Toluca"
+                    alt="Modelo Educativo"
                   />
                   <CardContent>
                     <Typography variant="h6" color="primary" fontWeight="bold">
                       Modelo Educativo
                     </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      paragraph
-                    >
+                    <Typography variant="body2" color="text.secondary" paragraph>
                       Actualmente la Universidad Tecnológica del Valle de
-                      Toluca, cuenta con los siguientes Programas Educativos que
-                      atienden las necesidades del Sector Productivo de la
-                      Región:
+                      Toluca cuenta con los siguientes Programas Educativos que
+                      atienden las necesidades del Sector Productivo de la Región.
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -180,14 +120,14 @@ const Dashboard = ({ setAuth }) => {
                       color="primary"
                       fullWidth
                     >
-                      Visitar Pagina de la UTVT
+                      Visitar Página de la UTVT
                     </Button>
                   </CardActions>
                 </Card>
               </Paper>
             </Grid>
 
-            {/* Card Promocional de la UTVT */}
+            {/* Card del Sistema de Calificaciones */}
             <Grid item xs={12} sm={6} md={4}>
               <Paper elevation={4} sx={{ borderRadius: 3 }}>
                 <Card sx={{ boxShadow: 4 }}>
@@ -195,17 +135,13 @@ const Dashboard = ({ setAuth }) => {
                     component="img"
                     height="200"
                     image={logo}
-                    alt="Universidad Tecnológica del Valle de Toluca"
+                    alt="Sistema de Calificaciones"
                   />
                   <CardContent>
                     <Typography variant="h6" color="primary" fontWeight="bold">
                       Sistema de Calificaciones (SAIIUT)
                     </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      paragraph
-                    >
+                    <Typography variant="body2" color="text.secondary" paragraph>
                       Accede con tu cuenta de la universidad para consultar tus
                       calificaciones.
                     </Typography>
@@ -227,7 +163,7 @@ const Dashboard = ({ setAuth }) => {
               </Paper>
             </Grid>
 
-            {/* Otra Card de Ejemplo */}
+            {/* Card de Ubicación */}
             <Grid item xs={12} sm={6} md={4}>
               <Paper elevation={4} sx={{ borderRadius: 3 }}>
                 <Card sx={{ boxShadow: 4 }}>
@@ -235,13 +171,9 @@ const Dashboard = ({ setAuth }) => {
                     <Typography variant="h6" color="primary" fontWeight="bold">
                       Ubicación
                     </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      paragraph
-                    >
-                      La Universidad Tecnológica del Valle de Toluca se
-                      encuentra ubicada en la dirección:
+                    <Typography variant="body2" color="text.secondary" paragraph>
+                      La Universidad Tecnológica del Valle de Toluca se encuentra
+                      ubicada en la dirección:
                     </Typography>
                   </CardContent>
                   <CardActions>

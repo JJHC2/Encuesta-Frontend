@@ -9,14 +9,17 @@ import GenerateExcel from "../libs/Excel/GenerateExcel";
 import AcademicoChart from "../libs/AcademicoChart";
 import PDFacademico from "../libs/PDF/PDFacademico";
 
-const Charts = ({ jobData, encuesta, seccionData, academicData, role }) => {
+const Charts = ({ jobData, encuesta, seccionData, academicData }) => {
   const handleGeneratePDF = () => {
     if (!jobData || !encuesta) {
       toast.error("Datos insuficientes para generar el PDF.");
       return;
     }
 
+    console.log("Datos a generar PDF:", jobData, encuesta);
     const toastId = toast.loading("Generando PDF...");
+
+    // Generar el PDF
     generatePDF(jobData, encuesta)
       .then(() => {
         toast.update(toastId, {
@@ -37,7 +40,7 @@ const Charts = ({ jobData, encuesta, seccionData, academicData, role }) => {
       });
   };
 
-  const handleGeneratePDFacademico = useCallback(() => {
+  const HandleGeneratePDFacademico = useCallback(() => {
     if (!academicData) {
       toast.error("Datos insuficientes para generar el PDF.");
       return;
@@ -63,13 +66,14 @@ const Charts = ({ jobData, encuesta, seccionData, academicData, role }) => {
       });
   }, [academicData]);
 
-  const handleGenerateExcel = useCallback(() => {
+  const HandleGenerateExcel = useCallback(() => {
     if (!seccionData) {
       toast.error("Datos insuficientes para generar el Excel.");
       return;
     }
 
     const toastId = toast.loading("Generando Excel...");
+
     GenerateExcel(seccionData)
       .then(() => {
         toast.update(toastId, {
@@ -100,18 +104,29 @@ const Charts = ({ jobData, encuesta, seccionData, academicData, role }) => {
               <Typography variant="h6" gutterBottom>
                 Gráfico de Trabajo
               </Typography>
-              <div id="pdf-pie-chart">
-                <JobCharts jobData={jobData} />
-              </div>
-              {jobData && encuesta && (
-                <Button
-                  onClick={handleGeneratePDF}
-                  variant="contained"
-                  color="error"
-                  startIcon={<i className="fa-solid fa-file-pdf"></i>}
+              {jobData &&
+              (jobData.yes?.length > 0 || jobData.no?.length > 0) ? (
+                <>
+                  <div id="pdf-pie-chart">
+                    <JobCharts jobData={jobData} />
+                  </div>
+                  <Button
+                    onClick={handleGeneratePDF}
+                    variant="contained"
+                    color="error"
+                    startIcon={<i className="fa-solid fa-file-pdf"></i>}
+                  >
+                    PDF
+                  </Button>
+                </>
+              ) : (
+                <Typography
+                  variant="body1"
+                  align="center"
+                  color="textSecondary"
                 >
-                  PDF
-                </Button>
+                  No hay datos por mostrar
+                </Typography>
               )}
             </CardContent>
           </Card>
@@ -121,53 +136,71 @@ const Charts = ({ jobData, encuesta, seccionData, academicData, role }) => {
           <Card sx={{ borderRadius: 2, boxShadow: 3 }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                Respuestas por sección
+                Respuestas por seccion
               </Typography>
-              <SeccionChart seccionData={seccionData} />
-              {seccionData && (
-                <Button
-                  onClick={handleGenerateExcel}
-                  variant="contained"
-                  color="success"
-                  startIcon={<i className="fa-solid fa-file-excel"></i>}
+              {seccionData && seccionData.length > 0 ? (
+                <>
+                  <SeccionChart seccionData={seccionData} />
+                  <Button
+                    onClick={HandleGenerateExcel}
+                    variant="contained"
+                    color="success"
+                    startIcon={<i className="fa-solid fa-file-excel"></i>}
+                  >
+                    EXCEL
+                  </Button>
+                </>
+              ) : (
+                <Typography
+                  variant="body1"
+                  align="center"
+                  color="textSecondary"
                 >
-                  EXCEL
-                </Button>
+                  No hay datos por mostrar
+                </Typography>
               )}
             </CardContent>
           </Card>
         </Grid>
 
-        {role !== 4 && (
-          <Grid item xs={12} sm={6}>
-            <Card sx={{ borderRadius: 2, boxShadow: 3 }}>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Evaluación Académica
-                </Typography>
-                <AcademicoChart academicData={academicData} />
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-evenly",
-                    marginTop: 16,
-                  }}
-                >
-                  {academicData && (
+        <Grid item xs={12} sm={6}>
+          <Card sx={{ borderRadius: 2, boxShadow: 3 }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Evaluación Académica
+              </Typography>
+              {academicData && academicData.length > 0 ? (
+                <>
+                  <AcademicoChart academicData={academicData} />
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-evenly",
+                      marginTop: 16,
+                    }}
+                  >
                     <Button
-                      onClick={handleGeneratePDFacademico}
+                      onClick={HandleGeneratePDFacademico}
                       variant="contained"
                       color="error"
                       startIcon={<i className="fa-solid fa-file-pdf"></i>}
                     >
                       PDF
                     </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          </Grid>
-        )}
+                  </div>
+                </>
+              ) : (
+                <Typography
+                  variant="body1"
+                  align="center"
+                  color="textSecondary"
+                >
+                  No hay datos por mostrar
+                </Typography>
+              )}
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
     </div>
   );

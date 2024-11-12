@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Grid, Typography, Container, AppBar, Toolbar, Button, Box } from "@mui/material";
 import SeccionAcademica from "../sections/SeccionAcademica";
 import SeccionInfraestructura from "../sections/SeccionInfraestructura";
 import SeccionServicios from "../sections/SeccionServicios";
@@ -16,8 +17,7 @@ import SeccionInfoInteres from "../sections/InformacionInteres/SeccionInfoIntere
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const BACKEND_URL =
-  process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 
 const EncuestaForm = () => {
   const [formData, setFormData] = useState({});
@@ -108,137 +108,156 @@ const EncuestaForm = () => {
       }
     }
   };
-  
 
   if (respondido) {
     return (
       <div className="container my-5">
         <ToastContainer />
-        <h2 className="text-center mb-4">
-          Ya has respondido la encuesta. Gracias.
-        </h2>
+        <Box sx={{ textAlign: "center", mt: 4 }}>
+          <Typography variant="h4" color="primary" paragraph>
+            Ya has respondido la encuesta. Gracias.
+          </Typography>
+          <Button variant="contained" color="primary" onClick={() => navigate("/dashboard")}>
+            Regresar al Dashboard
+          </Button>
+        </Box>
       </div>
     );
   }
 
   return (
     <div>
-      <div className="">
+      <AppBar position="sticky" color="primary">
+        <Toolbar>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            Encuesta de Satisfacción
+          </Typography>
+        </Toolbar>
+      </AppBar>
+
+      <Container maxWidth="sm" sx={{ marginTop: 4 }}>
         <ToastContainer />
-        <h2 className="text-center mb-4">Encuesta de Satisfaccion</h2>
-        {seccionActual === 1 && (
-          <SeccionAcademica
-            formData={formData.academica || {}}
-            HandleInputChange={(pregunta, respuesta) => {
-              HandleInputChange("academica", pregunta, respuesta);
-            }}
-          />
-        )}
-        {seccionActual === 2 && (
-          <SeccionInfraestructura
-            formData={formData.infraestructura || {}}
-            HandleInputChange={(pregunta, respuesta) => {
-              HandleInputChange("infraestructura", pregunta, respuesta);
-            }}
-          />
-        )}
-        {seccionActual === 3 && (
-          <SeccionProgramas
-            formData={formData.programas || {}}
-            HandleInputChange={(pregunta, respuesta) => {
-              HandleInputChange("programas", pregunta, respuesta);
-            }}
-          />
-        )}
-        {seccionActual === 4 && (
-          <SeccionServicios
-            formData={formData.servicios || {}}
-            HandleInputChange={(pregunta, respuesta) => {
-              HandleInputChange("servicios", pregunta, respuesta);
-            }}
-          />
-        )}
-        {seccionActual === 5 && (
-          <SeccionGradoSatisfaccion
-            formData={formData.satisfaccion || {}}
-            HandleInputChange={(pregunta, respuesta) => {
-              HandleInputChange("satisfaccion", pregunta, respuesta);
-            }}
-          />
-        )}
-        {seccionActual === 6 && (
-          <SeccionCursar
-            formData={formData.cursar || {}}
-            HandleInputChange={(pregunta, respuesta) => {
-              HandleInputChange("cursar", pregunta, respuesta);
-            }}
-          />
-        )}
-        {seccionActual === 7 && (
-          <SeccionServicioSocial
-            formData={formData.serviciosocial || {}}
-            HandleInputChange={(pregunta, respuesta) => {
-              HandleInputChange("serviciosocial", pregunta, respuesta);
-            }}
-          />
-        )}
-        {seccionActual === 8 && (
-          <SeccionServicioUtil
-            formData={formData.servicioutil || {}}
-            HandleInputChange={(pregunta, respuesta) => {
-              HandleInputChange("servicioutil", pregunta, respuesta);
-            }}
-          />
-        )}
-        {seccionActual === 9 && (
-          <SeccionPracticas
-            formData={formData.practicas || {}}
-            HandleInputChange={(pregunta, respuesta) => {
-              HandleInputChange("practicas", pregunta, respuesta);
-            }}
-          />
-        )}
-        {seccionActual === 10 && (
-          <SeccionPostgrado
-            formData={formData.postgrado || {}}
-            HandleInputChange={(pregunta, respuesta) => {
-              HandleInputChange("postgrado", pregunta, respuesta);
-            }}
-          />
-        )}
-        {seccionActual === 11 && (
-          <SeccionTrabajo
-            formData={formData.trabajo || {}}
-            HandleInputChange={(pregunta, respuesta) => {
-              HandleInputChange("trabajo", pregunta, respuesta);
-            }}
-          />
-        )}
-        {seccionActual === 12 && (
-          <SeccionDatosTrabajo
-            formData={formData.datostrabajo || {}}
-            HandleInputChange={(pregunta, respuesta) => {
-              HandleInputChange("datostrabajo", pregunta, respuesta);
-            }}
-          />
-        )}
-        {seccionActual === 13 && (
-          <SeccionInfoInteres
-            formData={formData.interes || {}}
-            HandleInputChange={(pregunta, respuesta) => {
-              HandleInputChange("interes", pregunta, respuesta);
-            }}
-          />
-        )}
-        <Navigation
-          seccionActual={seccionActual}
-          totalSecciones={13}
-          onPrevious={HandlePreviousSection}
-          onNext={HandleNextSection}
-          onSubmit={HandleSubmit}
-          formData={formData}
-        />
-      </div>
+        <Typography variant="h5" align="center" gutterBottom color="primary">
+          Encuesta de Satisfacción
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            {seccionActual === 1 && (
+              <SeccionAcademica
+                formData={formData.academica || {}}
+                HandleInputChange={(pregunta, respuesta) => {
+                  HandleInputChange("academica", pregunta, respuesta);
+                }}
+              />
+            )}
+            {seccionActual === 2 && (
+              <SeccionInfraestructura
+                formData={formData.infraestructura || {}}
+                HandleInputChange={(pregunta, respuesta) => {
+                  HandleInputChange("infraestructura", pregunta, respuesta);
+                }}
+              />
+            )}
+            {seccionActual === 3 && (
+              <SeccionProgramas
+                formData={formData.programas || {}}
+                HandleInputChange={(pregunta, respuesta) => {
+                  HandleInputChange("programas", pregunta, respuesta);
+                }}
+              />
+            )}
+            {seccionActual === 4 && (
+              <SeccionServicios
+                formData={formData.servicios || {}}
+                HandleInputChange={(pregunta, respuesta) => {
+                  HandleInputChange("servicios", pregunta, respuesta);
+                }}
+              />
+            )}
+            {seccionActual === 5 && (
+              <SeccionGradoSatisfaccion
+                formData={formData.satisfaccion || {}}
+                HandleInputChange={(pregunta, respuesta) => {
+                  HandleInputChange("satisfaccion", pregunta, respuesta);
+                }}
+              />
+            )}
+            {seccionActual === 6 && (
+              <SeccionCursar
+                formData={formData.cursar || {}}
+                HandleInputChange={(pregunta, respuesta) => {
+                  HandleInputChange("cursar", pregunta, respuesta);
+                }}
+              />
+            )}
+            {seccionActual === 7 && (
+              <SeccionServicioSocial
+                formData={formData.serviciosocial || {}}
+                HandleInputChange={(pregunta, respuesta) => {
+                  HandleInputChange("serviciosocial", pregunta, respuesta);
+                }}
+              />
+            )}
+            {seccionActual === 8 && (
+              <SeccionServicioUtil
+                formData={formData.servicioutil || {}}
+                HandleInputChange={(pregunta, respuesta) => {
+                  HandleInputChange("servicioutil", pregunta, respuesta);
+                }}
+              />
+            )}
+            {seccionActual === 9 && (
+              <SeccionPracticas
+                formData={formData.practicas || {}}
+                HandleInputChange={(pregunta, respuesta) => {
+                  HandleInputChange("practicas", pregunta, respuesta);
+                }}
+              />
+            )}
+            {seccionActual === 10 && (
+              <SeccionPostgrado
+                formData={formData.postgrado || {}}
+                HandleInputChange={(pregunta, respuesta) => {
+                  HandleInputChange("postgrado", pregunta, respuesta);
+                }}
+              />
+            )}
+            {seccionActual === 11 && (
+              <SeccionTrabajo
+                formData={formData.trabajo || {}}
+                HandleInputChange={(pregunta, respuesta) => {
+                  HandleInputChange("trabajo", pregunta, respuesta);
+                }}
+              />
+            )}
+            {seccionActual === 12 && (
+              <SeccionDatosTrabajo
+                formData={formData.datostrabajo || {}}
+                HandleInputChange={(pregunta, respuesta) => {
+                  HandleInputChange("datostrabajo", pregunta, respuesta);
+                }}
+              />
+            )}
+            {seccionActual === 13 && (
+              <SeccionInfoInteres
+                formData={formData.interes || {}}
+                HandleInputChange={(pregunta, respuesta) => {
+                  HandleInputChange("interes", pregunta, respuesta);
+                }}
+              />
+            )}
+          </Grid>
+          <Grid item xs={12}>
+            <Navigation
+              seccionActual={seccionActual}
+              totalSecciones={13}
+              onPrevious={HandlePreviousSection}
+              onNext={HandleNextSection}
+              onSubmit={HandleSubmit}
+            />
+          </Grid>
+        </Grid>
+      </Container>
     </div>
   );
 };

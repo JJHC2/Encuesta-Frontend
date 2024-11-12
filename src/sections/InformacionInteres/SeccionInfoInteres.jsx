@@ -1,10 +1,17 @@
 import React from "react";
+import { FormControl, RadioGroup, FormControlLabel, Radio, Typography, TextField } from "@mui/material";
 import PreguntaRadioGroup from "../../components/Encuesta/PreguntaRadioGroup";
+
 const SeccionInfoInteres = ({ formData, HandleInputChange }) => {
   return (
     <div>
-      <h1>Programa de Trayectorias de Empleabilidad Profesional (ProTEP)</h1>
-      <h3>Información de interés</h3>
+      <Typography variant="h4" gutterBottom>
+        Programa de Trayectorias de Empleabilidad Profesional (ProTEP)
+      </Typography>
+      <Typography variant="h6" gutterBottom>
+        Información de interés
+      </Typography>
+      
       <PreguntaRadioGroup
         pregunta="Información de interés que deseas conocer"
         opciones={[
@@ -19,49 +26,30 @@ const SeccionInfoInteres = ({ formData, HandleInputChange }) => {
         seleccion={formData.infointeres}
         onChange={(respuesta) => HandleInputChange("infointeres", respuesta)}
       />
+      
       <div style={{ marginBottom: "24px" }}>
-        <label
-          style={{
-            display: "block",
-            fontSize: "1.1rem",
-            fontWeight: "600",
-            color: "#333",
-            marginBottom: "8px",
-          }}
-        >
-          21. Comparte con la UTVT algunos de tus logros en el ámbito
-          profesional o personal
-        </label>
-        <textarea
+        <Typography variant="body1" component="label" gutterBottom>
+          21. Comparte con la UTVT algunos de tus logros en el ámbito profesional o personal
+        </Typography>
+        <TextField
           value={formData.logros || ""}
           onChange={(e) => HandleInputChange("logros", e.target.value)}
           placeholder="Escribe aquí tus logros"
+          multiline
+          rows={4}
+          variant="outlined"
+          fullWidth
           style={{
-            width: "100%",
-            padding: "12px",
-            border: "1px solid #ccc",
-            borderRadius: "8px",
-            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+            marginBottom: "8px",
             fontSize: "1rem",
-            color: "#333",
-            resize: "none",
-            minHeight: "120px",
-            transition: "border-color 0.3s ease",
-            outline: "none",
           }}
-          onFocus={(e) => (e.target.style.borderColor = "#6366F1")}
-          onBlur={(e) => (e.target.style.borderColor = "#ccc")}
+          inputProps={{
+            maxLength: 500,
+          }}
         />
-        <p
-          style={{
-            textAlign: "right",
-            fontSize: "0.9rem",
-            color: "#666",
-            marginTop: "4px",
-          }}
-        >
+        <Typography variant="body2" color="textSecondary" align="right">
           {formData.logros?.length || 0}/500 caracteres
-        </p>
+        </Typography>
       </div>
     </div>
   );

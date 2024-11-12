@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import cuervo from "../assets/image/cuervo.png";
 import { Link } from "react-router-dom";
-import {toast,ToastContainer} from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
-const BACKEND_URL =
-  process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const Register = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
     email: "",
@@ -24,30 +23,30 @@ const Register = ({ setAuth }) => {
 
     try {
       const body = { email, name, password, matricula, role_id: 2 };
-      const response = await axios.post(`${BACKEND_URL}/auth/register`, {
-        method: "POST",
+
+      const response = await axios.post(`${BACKEND_URL}/auth/register`, body, {
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
       });
 
-      const parseRes = await response.json();
+      const parseRes = response.data;
 
-      if (!response.ok) {
+      if (!response.status === 200) {
         throw new Error(parseRes.message || "Error desconocido");
       }
-      toast.success("Usuario registrado con exito")
+
+      toast.success("Usuario registrado con éxito");
       localStorage.setItem("token", parseRes.token);
       localStorage.setItem("role", parseInt(parseRes.role, 10));
       setAuth(true, parseRes.role);
     } catch (err) {
       console.error("Hubo un error", err);
-      toast.error("Error al registrarse")
+      toast.error("Error al registrarse");
     }
   };
 
   return (
     <div className="position-relative">
-      <ToastContainer/>
+      <ToastContainer />
       <div className="authentication-wrapper authentication-basic container-p-y">
         <div className="authentication-inner py-6 mx-4">
           <div className="card p-7">
@@ -61,12 +60,8 @@ const Register = ({ setAuth }) => {
             </div>
 
             <div className="card-body mt-1">
-              <h4
-                className="mb-1"
-              >
-                Registro
-              </h4>
-              <p className="mb-5" >
+              <h4 className="mb-1">Registro</h4>
+              <p className="mb-5">
                 Registrate y conoce todos lo beneficios que nuestra plataforma
                 tiene para ti 🚀
               </p>

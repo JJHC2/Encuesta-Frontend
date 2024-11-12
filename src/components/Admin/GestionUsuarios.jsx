@@ -92,112 +92,115 @@ const GestionUsuarios = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <>
-      <CssBaseline />
-      <AppBar position="sticky">
-        <Toolbar>
-          <IconButton edge="start" color="inherit" onClick={toggleSidebar}>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6">Bienvenido {name}</Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer open={sidebarOpen} onClose={toggleSidebar}>
-        <Sidebar
-          role={role}
-          openUsers={openUsers}
-          toggleUsersMenu={toggleUsersMenu}
-          openSurvey={openSurvey}
-          toggleSurveyMenu={toggleSurveyMenu}
-        />
-      </Drawer>
-      <main style={{ padding: "20px", marginLeft: sidebarOpen ? 240 : 0 }}>
-        <h2>Gestión de Usuarios</h2>
-        <div className="d-flex justify-content-between mb-3">
-          <input
-            type="text"
-            placeholder="Buscar por nombre, matrícula o correo"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="form-control w-50"
-          />
-        </div>
-        <MDBTable align="middle" className="table table-striped table-bordered">
-          <MDBTableHead>
-            <tr>
-              <th scope="col">Nombre</th>
-              <th scope="col">Email</th>
-              <th scope="col">Status</th>
-              <th scope="col">Matrícula</th>
-              <th scope="col">Role</th>
-              {role === 1 && <th>Actions</th>}
+<>
+  <CssBaseline />
+  <AppBar position="sticky">
+    <Toolbar>
+      <IconButton edge="start" color="inherit" onClick={toggleSidebar}>
+        <MenuIcon />
+      </IconButton>
+      <Typography variant="h6">Bienvenido {name}</Typography>
+    </Toolbar>
+  </AppBar>
+  <Drawer open={sidebarOpen} onClose={toggleSidebar}>
+    <Sidebar
+      role={role}
+      openUsers={openUsers}
+      toggleUsersMenu={toggleUsersMenu}
+      openSurvey={openSurvey}
+      toggleSurveyMenu={toggleSurveyMenu}
+    />
+  </Drawer>
+  <main style={{ padding: "20px", marginLeft: sidebarOpen ? 240 : 0 }}>
+    <h2>Gestión de Usuarios</h2>
+    <div className="d-flex justify-content-between mb-3">
+      <input
+        type="text"
+        placeholder="Buscar por nombre, matrícula o correo"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="form-control w-50"
+      />
+    </div>
+    <div className="table-responsive">
+      <MDBTable align="middle" className="table table-striped table-bordered">
+        <MDBTableHead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Email</th>
+            <th scope="col">Status</th>
+            <th scope="col">Matrícula</th>
+            <th scope="col">Role</th>
+            {role === 1 && <th>Actions</th>}
+          </tr>
+        </MDBTableHead>
+        <MDBTableBody>
+          {currentUsers.map((user) => (
+            <tr key={user.id}>
+              <td>{user.user_name}</td>
+              <td>{user.user_email}</td>
+              <td>
+                <span className="badge bg-success">Active</span>
+              </td>
+              <td>{user.user_matricula}</td>
+              <td>{user.role_name}</td>
+              {role === 1 &&
+                (user.role_id !== 1 ? (
+                  <td>
+                    <button
+                      className="btn btn-warning me-2"
+                      onClick={() => navigate(`/admin/edit/${user.id}`)}
+                    >
+                      <i className="fa-solid fa-pencil"></i>
+                    </button>
+                    <button
+                      onClick={() => navigate(`/admin/view/${user.id}`)}
+                      className="btn btn-primary me-2"
+                    >
+                      <i className="fa-solid fa-eye"></i>
+                    </button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => handleDeleteUser(user.id)}
+                    >
+                      <i className="fa-solid fa-trash"></i>
+                    </button>
+                  </td>
+                ) : (
+                  <h3 style={{ color: "red" }}>
+                    Usuario no se puede modificar
+                  </h3>
+                ))}
             </tr>
-          </MDBTableHead>
-          <MDBTableBody>
-            {currentUsers.map((user) => (
-              <tr key={user.id}>
-                <td>{user.user_name}</td>
-                <td>{user.user_email}</td>
-                <td>
-                  <span className="badge bg-success">Active</span>
-                </td>
-                <td>{user.user_matricula}</td>
-                <td>{user.role_name}</td>
-                {role === 1 &&
-                  (user.role_id !== 1 ? (
-                    <td>
-                      <button
-                        className="btn btn-warning me-2"
-                        onClick={() => navigate(`/admin/edit/${user.id}`)}
-                      >
-                        <i className="fa-solid fa-pencil"></i>
-                      </button>
-                      <button
-                        onClick={() => navigate(`/admin/view/${user.id}`)}
-                        className="btn btn-primary me-2"
-                      >
-                        <i className="fa-solid fa-eye"></i>
-                      </button>
-                      <button
-                        className="btn btn-danger"
-                        onClick={() => handleDeleteUser(user.id)}
-                      >
-                        <i className="fa-solid fa-trash"></i>
-                      </button>
-                    </td>
-                  ) : (
-                    <h3 style={{ color: "red" }}>
-                      Usuario no se puede modificar
-                    </h3>
-                  ))}
-              </tr>
-            ))}
-          </MDBTableBody>
-        </MDBTable>
-        <nav>
-          <ul className="pagination justify-content-center mt-3">
-            {[...Array(Math.ceil(filteredUsers.length / usersPerPage))].map(
-              (_, index) => (
-                <li
-                  key={index}
-                  className={`page-item ${
-                    index + 1 === currentPage ? "active" : ""
-                  }`}
-                >
-                  <button
-                    className="page-link"
-                    onClick={() => paginate(index + 1)}
-                  >
-                    {index + 1}
-                  </button>
-                </li>
-              )
-            )}
-          </ul>
-        </nav>
-      </main>
-      <ToastContainer />
-    </>
+          ))}
+        </MDBTableBody>
+      </MDBTable>
+    </div>
+    <nav>
+      <ul className="pagination justify-content-center mt-3">
+        {[...Array(Math.ceil(filteredUsers.length / usersPerPage))].map(
+          (_, index) => (
+            <li
+              key={index}
+              className={`page-item ${
+                index + 1 === currentPage ? "active" : ""
+              }`}
+            >
+              <button
+                className="page-link"
+                onClick={() => paginate(index + 1)}
+              >
+                {index + 1}
+              </button>
+            </li>
+          )
+        )}
+      </ul>
+    </nav>
+  </main>
+  <ToastContainer />
+</>
+
   );
 };
 

@@ -13,7 +13,7 @@ const Admin = ({ setAuth }) => {
   const [response, setResponse] = React.useState([]);
   const [seccionData, setSeccionData] = React.useState([]);
   const [academicData, setAcademicData] = React.useState([]);
-
+  
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");

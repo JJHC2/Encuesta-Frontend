@@ -1,39 +1,35 @@
-import React from "react";
+import React from 'react';
+import { Button, Grid, Typography } from '@mui/material';
 
-const Navigation = ({
-  seccionActual,
-  totalSecciones,
-  onPrevious,
-  onNext,
-  onSubmit,
-}) => {
+const Navigation = ({ seccionActual, totalSecciones, onPrevious, onNext, onSubmit }) => {
   return (
-    <div className="flex justify-center items-center space-x-4 p-4 bg-gray-50 rounded-lg shadow-md">
-      <span style={{color: 'red'}}>Pagina: {seccionActual} de {totalSecciones}</span>
-      {seccionActual > 1 && (
-        <button
-          onClick={onPrevious}
-          className=" btn btn-success px-4 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300 transition duration-200"
-        >
-          Atrás
-        </button>
-      )}
-      {seccionActual < totalSecciones ? (
-        <button
-          onClick={onNext}
-          className="btn btn-danger px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow hover:bg-blue-600 transition duration-200"
-        >
-          Siguiente
-        </button>
-      ) : (
-        <button
-          onClick={onSubmit}
-          className="btn btn-primary px-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow hover:bg-green-600 transition duration-200"
-        >
-          Enviar
-        </button>
-      )}
-    </div>
+    <Grid container spacing={2} sx={{ py: 3, mt: 3, textAlign: 'center' }}>
+      <Grid item xs={12} md={4}>
+        <Typography variant="body1" color="textSecondary">
+          Página: {seccionActual} de {totalSecciones}
+        </Typography>
+      </Grid>
+      <Grid item xs={12} md={4}>
+        {seccionActual > 1 && (
+          <Button
+            variant="outlined"
+            onClick={onPrevious}
+            sx={{ mr: 2 }}
+          >
+            Atrás
+          </Button>
+        )}
+        {seccionActual < totalSecciones ? (
+          <Button variant="contained" color="primary" onClick={onNext}>
+            Siguiente
+          </Button>
+        ) : (
+          <Button variant="contained" color="success" onClick={onSubmit}>
+            Enviar
+          </Button>
+        )}
+      </Grid>
+    </Grid>
   );
 };
 

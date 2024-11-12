@@ -98,7 +98,7 @@ const Sidebar = ({
       <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
 
       {/* Cerrar sesión  */}
-      <ListItem button onClick={logout}>
+      <ListItem>
         <ExitToApp color="primary" />
         <ListItemText primary="Logout" sx={{ marginLeft: 2 }} />
       </ListItem>

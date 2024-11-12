@@ -33,7 +33,7 @@ const Register = ({ setAuth }) => {
       if (!response.ok) {
         throw new Error(parseRes.message || "Error desconocido");
       }
-
+      localStorage.setItem("role",parseRes.role)
       localStorage.setItem("token", parseRes.token);
       setAuth(true, parseRes.role);
     } catch (err) {

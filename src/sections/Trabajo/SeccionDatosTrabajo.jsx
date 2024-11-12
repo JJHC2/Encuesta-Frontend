@@ -8,7 +8,7 @@ const SeccionDatosTrabajo = ({ formData, HandleInputChange }) => {
           15 . Nombre de la empresa, institución u organismo donde laboras
         </label>
         <input
-          type="email"
+          type="text"
           className="form-control"
           value={formData.empresa || ""}
           onChange={(e) => HandleInputChange("empresa", e.target.value)}

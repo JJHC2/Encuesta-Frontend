@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import cuervo from "../assets/image/cuervo.png";
 import { Link } from "react-router-dom";
+import {toast,ToastContainer} from "react-toastify";
+import axios from "axios";
 const BACKEND_URL =
-  process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+  process.env.REACT_APP_BACKEND_URL;
 const Register = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
     email: "",
@@ -22,7 +24,7 @@ const Register = ({ setAuth }) => {
 
     try {
       const body = { email, name, password, matricula, role_id: 2 };
-      const response = await fetch(`${BACKEND_URL}/auth/register`, {
+      const response = await axios.post(`${BACKEND_URL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -33,17 +35,19 @@ const Register = ({ setAuth }) => {
       if (!response.ok) {
         throw new Error(parseRes.message || "Error desconocido");
       }
-
+      toast.success("Usuario registrado con exito")
       localStorage.setItem("token", parseRes.token);
+      localStorage.setItem("role", parseInt(parseRes.role, 10));
       setAuth(true, parseRes.role);
     } catch (err) {
       console.error("Hubo un error", err);
-      alert(err.message || "Error de registro, intenta nuevamente.");
+      toast.error("Error al registrarse")
     }
   };
 
   return (
     <div className="position-relative">
+      <ToastContainer/>
       <div className="authentication-wrapper authentication-basic container-p-y">
         <div className="authentication-inner py-6 mx-4">
           <div className="card p-7">
@@ -59,11 +63,10 @@ const Register = ({ setAuth }) => {
             <div className="card-body mt-1">
               <h4
                 className="mb-1"
-                style={{ fontFamily: "cursive", fontKerning: "inherit" }}
               >
                 Registro
               </h4>
-              <p className="mb-5" style={{ fontFamily: "cursive" }}>
+              <p className="mb-5" >
                 Registrate y conoce todos lo beneficios que nuestra plataforma
                 tiene para ti 🚀
               </p>

@@ -16,7 +16,8 @@ import SeccionInfoInteres from "../sections/InformacionInteres/SeccionInfoIntere
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+const BACKEND_URL =
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 
 const EncuestaForm = () => {
   const [formData, setFormData] = useState({});
@@ -60,36 +61,62 @@ const EncuestaForm = () => {
     setSeccionActual((prev) => prev - 1);
   };
 
-  const HandleSubmit = async () => {
-    try {
-      const res = await fetch(`${BACKEND_URL}/dashboard/encuesta`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          token: localStorage.getItem("token"),
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (res.status === 200) {
-        toast.success("Encuesta enviada con éxito");
-        setFormData({});
-        navigate("/dashboard")
-      } else {
-        const errorMessage = await res.text();
-        toast.error(`Error al enviar la encuesta: ${errorMessage}`);
+  const countTotalElements = (data) => {
+    let count = 0;
+    
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        count++;
+      
+        const innerObj = data[key];
+        count += Object.keys(innerObj).length * 2; 
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("Error en la conexión con el servidor");
+    }
+    
+    return count;
+  };
+  
+  const HandleSubmit = async () => {
+    const totalElements = countTotalElements(formData);
+
+    console.log(totalElements)
+  
+    if (totalElements < 127) {
+      toast.error("Por favor contesta todas las preguntas");
+    } else {
+      try {
+        const res = await fetch(`${BACKEND_URL}/dashboard/encuesta`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            token: localStorage.getItem("token"),
+          },
+          body: JSON.stringify(formData),
+        });
+  
+        if (res.status === 200) {
+          toast.success("Encuesta enviada con éxito");
+          setFormData({});
+          navigate("/dashboard");
+        } else {
+          const errorMessage = await res.text();
+          toast.error(`Error al enviar la encuesta: ${errorMessage}`);
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Error en la conexión con el servidor");
+      }
     }
   };
+  
 
   if (respondido) {
     return (
       <div className="container my-5">
         <ToastContainer />
-        <h2 className="text-center mb-4">Ya has respondido la encuesta. Gracias.</h2>
+        <h2 className="text-center mb-4">
+          Ya has respondido la encuesta. Gracias.
+        </h2>
       </div>
     );
   }
@@ -209,6 +236,7 @@ const EncuestaForm = () => {
           onPrevious={HandlePreviousSection}
           onNext={HandleNextSection}
           onSubmit={HandleSubmit}
+          formData={formData}
         />
       </div>
     </div>

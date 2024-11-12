@@ -1,6 +1,28 @@
-import React from "react";
+import React,{useState} from "react";
 import PreguntaRadioGroup from "../components/Encuesta/PreguntaRadioGroup";
 const SeccionAcademica = ({ formData, HandleInputChange }) => {
+  const [errors, setErrors] = useState({}); // Estado para guardar errores
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newErrors = {};
+
+    // Validación: Comprobar si cada campo tiene respuesta
+    if (!formData.capacidadDocentes) newErrors.capacidadDocentes = "Este campo es obligatorio";
+    if (!formData.docentesPostgrado) newErrors.docentesPostgrado = "Este campo es obligatorio";
+    if (!formData.docentesExperiencia) newErrors.docentesExperiencia = "Este campo es obligatorio";
+    if (!formData.contenidosTeoricos) newErrors.contenidosTeoricos = "Este campo es obligatorio";
+    if (!formData.desarrolloPracticas) newErrors.desarrolloPracticas = "Este campo es obligatorio";
+
+    setErrors(newErrors); // Actualiza el estado con los errores
+
+    // Si no hay errores, enviar el formulario
+    if (Object.keys(newErrors).length === 0) {
+      // Lógica para enviar el formulario
+      console.log("Formulario enviado");
+    }
+  };
+
   return (
     <div>
       <section className="mb-5">
@@ -21,6 +43,7 @@ const SeccionAcademica = ({ formData, HandleInputChange }) => {
           onChange={(respuesta) =>
             HandleInputChange("capacidadDocentes", respuesta)
           }
+          error={errors.capacidadDocentes}
         />
         <PreguntaRadioGroup
           pregunta="Docentes con estudios de posgrado (Especialidad, Maestrías o Doctorados)."
@@ -29,6 +52,7 @@ const SeccionAcademica = ({ formData, HandleInputChange }) => {
           onChange={(respuesta) =>
             HandleInputChange("docentesPostgrado", respuesta)
           }
+          error={errors.docentesPostgrado}
         />
         <PreguntaRadioGroup
           pregunta="Docentes con experiencia profesional."

@@ -52,8 +52,9 @@ const GestionEncuesta = () => {
 
   const fetchResponses = async () => {
     try {
+      const trimmedUserName = userName.trim();
       const response = await axios.get(
-        `${BACKEND_URL}/admin/responses/${userName}`,
+        `${BACKEND_URL}/admin/responses/${trimmedUserName}`,
         {
           headers: {
             token: localStorage.getItem("token"),

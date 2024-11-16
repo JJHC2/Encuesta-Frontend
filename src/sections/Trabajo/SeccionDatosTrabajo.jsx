@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, TextField, Paper,EmailField,NumericField } from "@mui/material";
+import { Box, Typography, TextField, Paper} from "@mui/material";
 import PreguntaRadioGroup from "../../components/Encuesta/PreguntaRadioGroup";
 
 const SeccionDatosTrabajo = ({ formData, HandleInputChange }) => {
@@ -75,23 +75,24 @@ const SeccionDatosTrabajo = ({ formData, HandleInputChange }) => {
           sx={{ marginBottom: 2 }}
         />
 
-        <EmailField
+        <TextField
           fullWidth
           label="Correo del Jefe"
+          type="email"
           variant="outlined"
           value={formData.correojefe || ""}
           onChange={(e) => HandleInputChange("correojefe", e.target.value)}
           sx={{ marginBottom: 2 }}
         />
 
-        <NumericField
+        <TextField
           fullWidth
           label="Teléfono del Jefe"
           variant="outlined"
+          type="number"
           required
           value={formData.telefono || ""}
           onChange={(e) => HandleInputChange("telefono", e.target.value)}
-          type="number"
           sx={{ marginBottom: 2 }}
         />
 
@@ -99,7 +100,6 @@ const SeccionDatosTrabajo = ({ formData, HandleInputChange }) => {
           fullWidth
           label="Extensión del Jefe"
           variant="outlined"
-          required
           value={formData.extencion || ""}
           onChange={(e) => HandleInputChange("extencion", e.target.value)}
           sx={{ marginBottom: 2 }}

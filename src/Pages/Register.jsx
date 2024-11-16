@@ -31,7 +31,7 @@ const Register = ({ setAuth }) => {
       });
 
       if(response.status !== 200){
-        toast.error(response.data.error);
+        toast.error(response.error);
         return;
       }
 

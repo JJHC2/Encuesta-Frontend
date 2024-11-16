@@ -16,6 +16,7 @@ import SeccionDatosTrabajo from "../sections/Trabajo/SeccionDatosTrabajo";
 import SeccionInfoInteres from "../sections/InformacionInteres/SeccionInfoInteres";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/image/cuervo.png;"
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 
@@ -127,11 +128,28 @@ const EncuestaForm = () => {
 
   return (
     <div>
-      <AppBar position="sticky" color="primary">
-        <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Encuesta de Satisfacción
-          </Typography>
+        <AppBar position="sticky" sx={{ bgcolor: "green" }}>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          <Box display="flex" alignItems="center">
+            <img
+              src={logo}
+              alt="UTVT Logo"
+              style={{ height: 50, marginRight: 16 }}
+            />
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", color: "#ffffff" }}
+            >
+              Encuesta de Satisfacción
+            </Typography>
+          </Box>
+          <Button
+            variant="contained"
+            color="#ffffff"
+            onClick={() => navigate("/dashboard")}
+          >
+            <i class="fa-solid fa-arrow-left"></i>
+          </Button>
         </Toolbar>
       </AppBar>
 

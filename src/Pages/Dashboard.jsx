@@ -103,7 +103,7 @@ const Dashboard = ({ setAuth }) => {
           >
             <Button
               startIcon={<PollIcon />}
-              component={Link} // Usamos Link para redirigir
+              component={Link} 
               to="/encuesta"
               sx={{ color: "#ffffff" }}
             >

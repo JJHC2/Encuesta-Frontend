@@ -30,14 +30,13 @@ const Register = ({ setAuth }) => {
         headers: {"Content-Type": "application/json"}
       });
 
-      if(response.status === 401){
+      if(response.status !== 200){
         toast.error(response.data.error);
         return;
       }
 
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("role", response.data.role);
-      setAuth(true,response.data.role);
     }catch(error){
       console.error(error.message);
       toast.error("Error al registrar, intenta de nuevo");

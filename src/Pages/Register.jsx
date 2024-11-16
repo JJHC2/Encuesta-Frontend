@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import cuervo from "../assets/image/cuervo.png";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+
 const Register = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
     email: "",
@@ -10,6 +12,7 @@ const Register = ({ setAuth }) => {
     password: "",
     matricula: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const { email, name, password, matricula } = inputs;
 
@@ -34,12 +37,12 @@ const Register = ({ setAuth }) => {
         toast.error(parseRes.error);
         return;
       }
-      localStorage.setItem("role",parseRes.role)
+      localStorage.setItem("role", parseRes.role);
       localStorage.setItem("token", parseRes.token);
       setAuth(true, parseRes.role);
     } catch (err) {
       console.error("Hubo un error", err);
-      alert(err.message || "Error de registro, intenta nuevamente.");
+      alert(err.error || "Error de registro, intenta nuevamente.");
     }
   };
 
@@ -59,17 +62,18 @@ const Register = ({ setAuth }) => {
             </div>
 
             <div className="card-body mt-1">
-              <h4 className="mb-1">Registro</h4>
-              <p className="mb-5">
+              <h4
+                className="mb-1"
+                style={{ fontFamily: "cursive", fontKerning: "inherit" }}
+              >
+                Registro
+              </h4>
+              <p className="mb-5" style={{ fontFamily: "cursive" }}>
                 Registrate y conoce todos lo beneficios que nuestra plataforma
                 tiene para ti 🚀
               </p>
 
-              <form
-                id="formAuthentication"
-                className="mb-5"
-                onSubmit={onSubmitForm}
-              >
+              <form id="formAuthentication" className="mb-5" onSubmit={onSubmitForm}>
                 <div className="form-floating form-floating-outline mb-5">
                   <input
                     type="text"
@@ -78,10 +82,11 @@ const Register = ({ setAuth }) => {
                     name="name"
                     value={name}
                     onChange={onChange}
+                    required
                     placeholder="Enter your username"
-                    autofocus
+                    autoFocus
                   />
-                  <label for="username">Usuario</label>
+                  <label htmlFor="username">Usuario</label>
                 </div>
                 <div className="form-floating form-floating-outline mb-5">
                   <input
@@ -91,25 +96,34 @@ const Register = ({ setAuth }) => {
                     value={email}
                     onChange={onChange}
                     name="email"
+                    required
                     placeholder="Enter your email"
                   />
-                  <label for="email">Email</label>
+                  <label htmlFor="email">Email</label>
                 </div>
                 <div className="mb-5 form-password-toggle">
                   <div className="input-group input-group-merge">
                     <div className="form-floating form-floating-outline">
                       <input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         id="password"
                         className="form-control"
                         name="password"
                         value={password}
                         onChange={onChange}
-                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                        required
+                        placeholder="••••••••"
                         aria-describedby="password"
                       />
-                      <label for="password">Password</label>
+                      <label htmlFor="password">Password</label>
                     </div>
+                    <button
+                      type="button"
+                      className="btn btn-outline-secondary"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <i class="fa-solid fa-eye-slash"></i> : <i class="fa-solid fa-eye"></i>}
+                    </button>
                   </div>
                 </div>
                 <div className="mb-5 form-password-toggle">
@@ -118,21 +132,19 @@ const Register = ({ setAuth }) => {
                       <input
                         type="number"
                         id="matricula"
+                        required
                         className="form-control"
                         name="matricula"
                         value={matricula}
                         onChange={onChange}
-                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                        placeholder="Ingrese su matrícula"
                         aria-describedby="matricula"
                       />
-                      <label for="password">Matricula</label>
+                      <label htmlFor="matricula">Matrícula</label>
                     </div>
                   </div>
                 </div>
-                <button
-                  type="submit"
-                  className="btn btn-success d-grid w-100 mb-5"
-                >
+                <button type="submit" className="btn btn-success d-grid w-100 mb-5">
                   Sign up
                 </button>
               </form>

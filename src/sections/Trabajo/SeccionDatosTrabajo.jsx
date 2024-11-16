@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, TextField, Paper } from "@mui/material";
+import { Box, Typography, TextField, Paper,EmailField,NumericField } from "@mui/material";
 import PreguntaRadioGroup from "../../components/Encuesta/PreguntaRadioGroup";
 
 const SeccionDatosTrabajo = ({ formData, HandleInputChange }) => {
@@ -13,6 +13,7 @@ const SeccionDatosTrabajo = ({ formData, HandleInputChange }) => {
           fullWidth
           label="Nombre de la Empresa"
           variant="outlined"
+          required
           value={formData.empresa || ""}
           onChange={(e) => HandleInputChange("empresa", e.target.value)}
           sx={{ marginBottom: 2 }}
@@ -43,6 +44,7 @@ const SeccionDatosTrabajo = ({ formData, HandleInputChange }) => {
         </Typography>
         <TextField
           fullWidth
+          required
           label="Mes y Año de Contratación"
           variant="outlined"
           value={formData.fechacontratacion || ""}
@@ -57,6 +59,7 @@ const SeccionDatosTrabajo = ({ formData, HandleInputChange }) => {
           fullWidth
           label="Nombre del Jefe"
           variant="outlined"
+          required
           value={formData.nombrejefe || ""}
           onChange={(e) => HandleInputChange("nombrejefe", e.target.value)}
           sx={{ marginBottom: 2 }}
@@ -66,12 +69,13 @@ const SeccionDatosTrabajo = ({ formData, HandleInputChange }) => {
           fullWidth
           label="Cargo del Jefe"
           variant="outlined"
+          required
           value={formData.cargojefe || ""}
           onChange={(e) => HandleInputChange("cargojefe", e.target.value)}
           sx={{ marginBottom: 2 }}
         />
 
-        <TextField
+        <EmailField
           fullWidth
           label="Correo del Jefe"
           variant="outlined"
@@ -80,10 +84,11 @@ const SeccionDatosTrabajo = ({ formData, HandleInputChange }) => {
           sx={{ marginBottom: 2 }}
         />
 
-        <TextField
+        <NumericField
           fullWidth
           label="Teléfono del Jefe"
           variant="outlined"
+          required
           value={formData.telefono || ""}
           onChange={(e) => HandleInputChange("telefono", e.target.value)}
           type="number"
@@ -94,6 +99,7 @@ const SeccionDatosTrabajo = ({ formData, HandleInputChange }) => {
           fullWidth
           label="Extensión del Jefe"
           variant="outlined"
+          required
           value={formData.extencion || ""}
           onChange={(e) => HandleInputChange("extencion", e.target.value)}
           sx={{ marginBottom: 2 }}

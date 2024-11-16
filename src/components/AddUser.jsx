@@ -28,6 +28,7 @@ const AddUser = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [openUsers, setOpenUsers] = useState(false);
   const [openSurvey, setOpenSurvey] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);  // Estado para controlar la visibilidad de la contraseña
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const toggleUsersMenu = () => setOpenUsers(!openUsers);
@@ -58,7 +59,7 @@ const AddUser = () => {
       setRoleid("");
       navigate("/gestion");
     } catch (error) {
-      toast.error("El usuario ya existe");
+      toast.error("Error al agregar el usuario");
       console.error("Error al agregar usuario:", error);
     }
   };
@@ -116,11 +117,21 @@ const AddUser = () => {
             fullWidth
             label="Contraseña"
             variant="outlined"
-            type="password"
+            type={showPassword ? "text" : "password"} 
             value={userPassword}
             onChange={(e) => setUserPassword(e.target.value)}
             required
             margin="normal"
+            InputProps={{
+              endAdornment: (
+                <IconButton
+                  onClick={() => setShowPassword(!showPassword)}  
+                  edge="end"
+                >
+                  {showPassword ? <i class="fa-solid fa-eye-slash"></i> : <i class="fa-solid fa-eye"></i>}  
+                </IconButton>
+              ),
+            }}
           />
           <TextField
             fullWidth

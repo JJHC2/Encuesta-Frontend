@@ -10,6 +10,8 @@ const Login = ({ setAuth }) => {
     password: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false); // Estado para mostrar/ocultar contraseña
+
   const { email, password } = inputs;
 
   const onChange = (e) => {
@@ -71,41 +73,50 @@ const Login = ({ setAuth }) => {
               >
                 <div className="form-floating form-floating-outline mb-5">
                   <input
-                    type="text"
+                    type="email"
                     className="form-control"
                     id="email"
                     name="email"
                     value={email}
+                    required
                     onChange={onChange}
                     placeholder="Enter your email or username"
-                    autofocus
+                    autoFocus
                   />
-                  <label for="email">Email or Username</label>
+                  <label htmlFor="email">Email or Username</label>
                 </div>
                 <div className="mb-5">
                   <div className="form-password-toggle">
                     <div className="input-group input-group-merge">
                       <div className="form-floating form-floating-outline">
                         <input
-                          type="password"
+                          type={showPassword ? "text" : "password"}
                           id="password"
                           className="form-control"
                           name="password"
                           onChange={onChange}
                           value={password}
+                          required
                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                           aria-describedby="password"
                         />
-                        <label for="password">Password</label>
+                        <label htmlFor="password">Password</label>
                       </div>
+                      <button
+                        type="button"
+                        className="btn btn-outline-secondary"
+                        onClick={() => setShowPassword(!showPassword)} 
+                      >
+                        {showPassword ? <i class="fa-solid fa-eye-slash"></i> : <i class="fa-solid fa-eye"></i>}
+                      </button>
                     </div>
                   </div>
                 </div>
                 <div className="mb-5 pb-2 d-flex justify-content-between pt-2 align-items-center">
                   <label>Olvidaste tu Contraseña?</label>
-                  <Link to="/forgot-password" className="float-end mb-1">
+                  <a href="/forgot-password" className="float-end mb-1">
                     <span>Recuperar Contraseña?</span>
-                  </Link>
+                  </a>
                 </div>
                 <div className="mb-5">
                   <button

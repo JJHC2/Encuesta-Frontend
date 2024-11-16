@@ -22,7 +22,7 @@ const Register = ({ setAuth }) => {
   };
 
   const onSubmitForm = async (e) => {
-    e.preventdDefault();
+    e.preventDefault();
 
     try{
       const body = {email,name,password,matricula,role_id: 2};

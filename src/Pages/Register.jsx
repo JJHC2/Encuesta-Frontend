@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import cuervo from "../assets/image/cuervo.png";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 
@@ -25,8 +26,7 @@ const Register = ({ setAuth }) => {
 
     try {
       const body = { email, name, password, matricula, role_id: 2 };
-      const response = await fetch(`${BACKEND_URL}/auth/register`, {
-        method: "POST",
+      const response = await axios.post(`${BACKEND_URL}/auth/register`, {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
@@ -64,11 +64,10 @@ const Register = ({ setAuth }) => {
             <div className="card-body mt-1">
               <h4
                 className="mb-1"
-                style={{ fontFamily: "cursive", fontKerning: "inherit" }}
               >
                 Registro
               </h4>
-              <p className="mb-5" style={{ fontFamily: "cursive" }}>
+              <p className="mb-5">
                 Registrate y conoce todos lo beneficios que nuestra plataforma
                 tiene para ti 🚀
               </p>

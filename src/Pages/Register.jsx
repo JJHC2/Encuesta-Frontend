@@ -42,7 +42,7 @@ const Register = ({ setAuth }) => {
       setAuth(true, parseRes.role);
     } catch (err) {
       console.error("Hubo un error", err);
-      alert(err.error || "Error de registro, intenta nuevamente.");
+      toast(err.error || "Error de registro, intenta nuevamente.");
     }
   };
 

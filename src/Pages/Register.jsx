@@ -22,29 +22,27 @@ const Register = ({ setAuth }) => {
   };
 
   const onSubmitForm = async (e) => {
-    e.preventDefault();
+    e.preventdDefault();
 
-    try {
-      const body = { email, name, password, matricula, role_id: 2 };
-      const response = await axios.post(`${BACKEND_URL}/auth/register`, {
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+    try{
+      const body = {email,name,password,matricula,role_id: 2};
+      const response = await axios.post(`${BACKEND_URL}/auth/register`,body,{
+        headers: {"Content-Type": "application/json"}
       });
 
-      const parseRes = await response.json();
-
-      if (response.status === 401) {
-        toast.error(parseRes.error);
+      if(response.status === 401){
+        toast.error(response.data.error);
         return;
       }
-      localStorage.setItem("role", parseRes.role);
-      localStorage.setItem("token", parseRes.token);
-      setAuth(true, parseRes.role);
-    } catch (err) {
-      console.error("Hubo un error", err);
-      toast(err.error || "Error de registro, intenta nuevamente.");
+
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("role", response.data.role);
+      setAuth(true,response.data.role);
+    }catch(error){
+      console.error(error.message);
+      toast.error("Error al registrar, intenta de nuevo");
     }
-  };
+  }
 
   return (
     <div className="position-relative">

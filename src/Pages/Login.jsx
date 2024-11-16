@@ -30,7 +30,7 @@ const Login = ({ setAuth }) => {
       const parseRes = await response.json();
 
       if (response.status === 401) {
-        toast.error(parseRes);
+        toast.error(parseRes.error);
         return;
       }
 

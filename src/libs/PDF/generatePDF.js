@@ -116,12 +116,14 @@ const generatePDF = (jobData, encuesta) => {
           currentY += 10;
         });
 
+
+        //Grafica
         position = currentY + 20;
 
         pdf.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
         position += imgHeight + 15;
 
-        position += 10;
+        position += 35;
         pdf.setFontSize(14);
         pdf.setTextColor(0, 51, 102);
         pdf.text("Análisis Gráfico", margin, position);

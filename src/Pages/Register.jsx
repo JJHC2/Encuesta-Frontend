@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import cuervo from "../assets/image/cuervo.png";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import axios from "axios";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const Register = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
@@ -23,24 +22,24 @@ const Register = ({ setAuth }) => {
 
     try {
       const body = { email, name, password, matricula, role_id: 2 };
-
-      const response = await axios.post(`${BACKEND_URL}/auth/register`, body, {
+      const response = await fetch(`${BACKEND_URL}/auth/register`, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
       });
 
-      const parseRes = response.data;
+      const parseRes = await response.json();
 
-      if (!response.status === 200) {
-        throw new Error(parseRes.message || "Error desconocido");
+      if (response.status === 401) {
+        toast.error(parseRes.error);
+        return;
       }
-
-      toast.success("Usuario registrado con éxito");
+      localStorage.setItem("role",parseRes.role)
       localStorage.setItem("token", parseRes.token);
-      localStorage.setItem("role", parseInt(parseRes.role, 10));
       setAuth(true, parseRes.role);
     } catch (err) {
       console.error("Hubo un error", err);
-      toast.error("Error al registrarse");
+      alert(err.message || "Error de registro, intenta nuevamente.");
     }
   };
 

@@ -15,9 +15,10 @@ import {
   MenuItem,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import Sidebar from './templates/Sidebar';
+import Sidebar from "./templates/Sidebar";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+const BACKEND_URL =
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 
 const EditUser = () => {
   const { id } = useParams();
@@ -40,6 +41,10 @@ const EditUser = () => {
         const response = await axios.get(`${BACKEND_URL}/admin/users/${id}`, {
           headers: { token: localStorage.token },
         });
+        if (response.status === 401) {
+          toast.error(response.error);
+          return;
+        }
         setUserName(response.data.user_name);
         setUserEmail(response.data.user_email);
         setUserMatricula(response.data.user_matricula);
@@ -54,7 +59,7 @@ const EditUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(
+      const response = await axios.put(
         `${BACKEND_URL}/admin/users/${id}`,
         {
           user_name: userName,
@@ -66,14 +71,26 @@ const EditUser = () => {
           headers: { token: localStorage.token },
         }
       );
+  
+      if (response.status !== 200) {
+        toast.error(response.data.error || "Hubo un error en la actualización");
+        return;
+      }
+  
       toast.success("Usuario editado con éxito");
       navigate("/gestion");
     } catch (error) {
-      toast.error("Error al editar el usuario");
-      console.error("Error al editar usuario:", error);
+      if (error.response) {
+        toast.error(error.response.data.error || "Hubo un error al actualizar el usuario");
+      } else if (error.request) {
+        toast.error("No se pudo conectar con el servidor. Intenta nuevamente.");
+      } else {
+        toast.error("Hubo un problema con la solicitud. Intenta nuevamente.");
+      }
+      console.error("Hubo un error:", error);
     }
   };
-
+  
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -89,7 +106,7 @@ const EditUser = () => {
       </AppBar>
 
       <Drawer open={sidebarOpen} onClose={toggleSidebar}>
-      <Sidebar
+        <Sidebar
           role={roleid}
           openUsers={openUsers}
           toggleUsersMenu={toggleUsersMenu}

@@ -19,7 +19,7 @@ const BACKEND_URL =
 
 const GestionEncuesta = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
   const [responses, setResponses] = useState([]);
   const [openUsers, setOpenUsers] = useState(false);
   const [openSurvey, setOpenSurvey] = useState(false);
@@ -52,9 +52,8 @@ const GestionEncuesta = () => {
 
   const fetchResponses = async () => {
     try {
-      const trimmedUserName = userName.trim();
       const response = await axios.get(
-        `${BACKEND_URL}/admin/responses/${trimmedUserName}`,
+        `${BACKEND_URL}/admin/responses/${userEmail}`,
         {
           headers: {
             token: localStorage.getItem("token"),
@@ -108,11 +107,11 @@ const GestionEncuesta = () => {
         <h2>Encuestas</h2>
         <div className="d-flex justify-content-between mb-3">
           <input
-            type="text"
-            placeholder="Buscar por nombre de usuario"
+            type="email"
+            placeholder="Buscar por el correo del usuario"
             className="form-control w-50"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            value={userEmail}
+            onChange={(e) => setUserEmail(e.target.value)}
           />
           <button
             type="submit"

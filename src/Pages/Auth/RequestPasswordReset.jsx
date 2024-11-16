@@ -52,10 +52,11 @@ const RequestPasswordReset = () => {
               >
                 <div className="form-floating form-floating-outline mb-5">
                   <input
-                    type="text"
+                    type="email"
                     className="form-control"
                     id="email"
                     name="email"
+                    required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"

@@ -17,8 +17,10 @@ const ResetPassword = () => {
         `${BACKEND_URL}/auth/reset-password`,
         { newPassword, token }
       );
-      toast.success("Contraseña restablecida con éxito");
-      alert("Contraseña restablecida con éxito");
+      if (response.status === 401) {
+        toast.error(response.error);
+        return;
+      }
       navigate("/");
       console.log(response.data);
     } catch (error) {

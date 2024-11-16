@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, TextField, Grid, Paper } from "@mui/material";
+import { Box, Typography, TextField, Paper } from "@mui/material";
 import PreguntaRadioGroup from "../../components/Encuesta/PreguntaRadioGroup";
 
 const SeccionDatosTrabajo = ({ formData, HandleInputChange }) => {

@@ -4,7 +4,6 @@ import {
   Dashboard,
   People,
   PersonAdd,
-  Edit,
   Visibility,
   ExpandLess,
   ExpandMore,

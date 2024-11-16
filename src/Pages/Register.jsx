@@ -85,7 +85,7 @@ const Register = ({ setAuth }) => {
                 </div>
                 <div className="form-floating form-floating-outline mb-5">
                   <input
-                    type="text"
+                    type="email"
                     className="form-control"
                     id="email"
                     value={email}

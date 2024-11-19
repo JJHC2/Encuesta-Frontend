@@ -19,7 +19,6 @@ import "react-toastify/dist/ReactToastify.css";
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [formData, setFormData] = useState({
-    profile_picture: "",
     bio: "",
     phone_number: "",
     address: "",
@@ -29,9 +28,9 @@ const Profile = () => {
   });
 
   const [error, setError] = useState("");
-  const [imagePreview, setImagePreview] = useState(null); // Para mostrar la imagen seleccionada
+  const [imagePreview, setImagePreview] = useState(null); 
 
-  const fileInputRef = useRef(null); // Referencia al input file
+  const fileInputRef = useRef(null); 
 
   useEffect(() => {
     // Asegúrate de que el token esté disponible

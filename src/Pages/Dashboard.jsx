@@ -270,7 +270,7 @@ const Dashboard = ({ setAuth }) => {
             textAlign="center"
             fontWeight="bold"
           >
-            Bienvenido {name}
+            Bienvenid@ {name}
           </Typography>
         </Slide>
 

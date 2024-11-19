@@ -24,24 +24,32 @@ const Register = ({ setAuth }) => {
   const onSubmitForm = async (e) => {
     e.preventDefault();
 
-    try{
-      const body = {email,name,password,matricula,role_id: 2};
-      const response = await axios.post(`${BACKEND_URL}/auth/register`,body,{
-        headers: {"Content-Type": "application/json"}
+    try {
+      const body = { email, name, password, matricula, role_id: 2 };
+
+      const response = await axios.post(`${BACKEND_URL}/auth/register`, body, {
+        headers: { "Content-Type": "application/json" },
       });
 
-      if(response.status !== 200){
-        toast.error(response.error);
-        return;
+      const parseRes = response.data;
+
+      if (!response.data === 401) {
+        toast.error(response.data.message);
       }
 
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("role", response.data.role);
-    }catch(error){
-      console.error(error.message);
-      toast.error("Error al registrar, intenta de nuevo");
+      toast.success("Usuario registrado con éxito");
+      localStorage.setItem("token", parseRes.token);
+      localStorage.setItem("role", parseInt(parseRes.role, 10));
+      setAuth(true, parseRes.role);
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        toast.error(err.response.data.message || "Error de autenticación");
+      } else {
+        console.error("Hubo un error", err);
+        toast.error("Error del servidor. Inténtalo más tarde.");
+      }
     }
-  }
+  };
 
   return (
     <div className="position-relative">

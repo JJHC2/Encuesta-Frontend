@@ -39,7 +39,6 @@ const Register = ({ setAuth }) => {
 
       toast.success("Usuario registrado con éxito");
       localStorage.setItem("token", parseRes.token);
-      localStorage.setItem("token", parseRes.token);
       localStorage.setItem("role", parseInt(parseRes.role, 10));
       setAuth(true, parseInt(parseRes.role, 10));
     } catch (err) {

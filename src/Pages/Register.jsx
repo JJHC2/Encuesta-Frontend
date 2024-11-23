@@ -31,7 +31,7 @@ const Register = ({ setAuth }) => {
         headers: { "Content-Type": "application/json" },
       });
 
-      const parseRes = response.data;
+      const parseRes = await response.json();
 
       if (!response.data === 401) {
         toast.error(response.data.message);

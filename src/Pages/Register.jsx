@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import cuervo from "../assets/image/cuervo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+const BACKEND_URL =
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 
 const Register = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
@@ -17,6 +18,7 @@ const Register = ({ setAuth }) => {
 
   const { email, name, password, matricula } = inputs;
 
+  const navigate = useNavigate();
   const onChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
@@ -31,18 +33,13 @@ const Register = ({ setAuth }) => {
         headers: { "Content-Type": "application/json" },
       });
 
-      const parseRes = response.data;
-
-
       if (response.status === 401) {
         toast.error(response.data.message);
         return;
       }
-      
 
-      localStorage.setItem("token", parseRes.token);
-      localStorage.setItem("role", parseInt(parseRes.role, 10));
-      setAuth(true, parseInt(parseRes.role, 10));
+      toast.success("Registro exitoso");
+      navigate("/");
     } catch (err) {
       if (err.response && err.response.status === 401) {
         toast.error(err.response.data.message || "Error de autenticación");
@@ -69,17 +66,17 @@ const Register = ({ setAuth }) => {
             </div>
 
             <div className="card-body mt-1">
-              <h4
-                className="mb-1"
-              >
-                Registro
-              </h4>
+              <h4 className="mb-1">Registro</h4>
               <p className="mb-5">
                 Registrate y conoce todos lo beneficios que nuestra plataforma
                 tiene para ti 🚀
               </p>
 
-              <form id="formAuthentication" className="mb-5" onSubmit={onSubmitForm}>
+              <form
+                id="formAuthentication"
+                className="mb-5"
+                onSubmit={onSubmitForm}
+              >
                 <div className="form-floating form-floating-outline mb-5">
                   <input
                     type="text"
@@ -128,7 +125,11 @@ const Register = ({ setAuth }) => {
                       className="btn btn-outline-secondary"
                       onClick={() => setShowPassword(!showPassword)}
                     >
-                      {showPassword ? <i class="fa-solid fa-eye-slash"></i> : <i class="fa-solid fa-eye"></i>}
+                      {showPassword ? (
+                        <i class="fa-solid fa-eye-slash"></i>
+                      ) : (
+                        <i class="fa-solid fa-eye"></i>
+                      )}
                     </button>
                   </div>
                 </div>
@@ -150,7 +151,10 @@ const Register = ({ setAuth }) => {
                     </div>
                   </div>
                 </div>
-                <button type="submit" className="btn btn-success d-grid w-100 mb-5">
+                <button
+                  type="submit"
+                  className="btn btn-success d-grid w-100 mb-5"
+                >
                   Sign up
                 </button>
               </form>

@@ -31,13 +31,15 @@ const Register = ({ setAuth }) => {
         headers: { "Content-Type": "application/json" },
       });
 
-      const parseRes = await response.json();
+      const parseRes = response.data;
 
-      if (!response.data === 401) {
+
+      if (response.status === 401) {
         toast.error(response.data.message);
+        return;
       }
+      
 
-      toast.success("Usuario registrado con éxito");
       localStorage.setItem("token", parseRes.token);
       localStorage.setItem("role", parseInt(parseRes.role, 10));
       setAuth(true, parseInt(parseRes.role, 10));

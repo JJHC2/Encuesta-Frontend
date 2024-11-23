@@ -41,7 +41,7 @@ const Dashboard = ({ setAuth }) => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(`${BACKEND_URL}/dashboard`, {
-          headers: { token: localStorage.token },
+          Authorization: `Bearer ${localStorage.getItem("token")}`
         });
         setName(response.data.user_name);
       } catch (error) {

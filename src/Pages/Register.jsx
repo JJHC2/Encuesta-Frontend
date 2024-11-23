@@ -25,21 +25,22 @@ const Register = ({ setAuth }) => {
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
-
+  
     try {
       const body = { email, name, password, matricula, role_id: 2 };
-
+  
       const response = await axios.post(`${BACKEND_URL}/auth/register`, body, {
         headers: { "Content-Type": "application/json" },
       });
-
+  
       if (response.status === 401) {
         toast.error(response.data.message);
         return;
       }
-
+  
       toast.success("Registro exitoso");
-      //Agregar un tiempo de 5 segudnos antes de mandarlo de vuelta al login
+  
+      
       setTimeout(() => {
         navigate("/");
       }, 5000);
@@ -52,6 +53,7 @@ const Register = ({ setAuth }) => {
       }
     }
   };
+  
 
   return (
     <div className="position-relative">

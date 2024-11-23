@@ -38,7 +38,7 @@ const Register = ({ setAuth }) => {
         return;
       }
   
-      toast.success("Registro exitoso");
+      alert("Registro exitoso");
   
       
       setTimeout(() => {

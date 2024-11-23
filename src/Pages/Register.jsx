@@ -39,8 +39,9 @@ const Register = ({ setAuth }) => {
 
       toast.success("Usuario registrado con éxito");
       localStorage.setItem("token", parseRes.token);
+      localStorage.setItem("token", parseRes.token);
       localStorage.setItem("role", parseInt(parseRes.role, 10));
-      setAuth(true, parseRes.role);
+      setAuth(true, parseInt(parseRes.role, 10));
     } catch (err) {
       if (err.response && err.response.status === 401) {
         toast.error(err.response.data.message || "Error de autenticación");

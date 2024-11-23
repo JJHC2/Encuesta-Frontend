@@ -39,7 +39,10 @@ const Register = ({ setAuth }) => {
       }
 
       toast.success("Registro exitoso");
-      navigate("/");
+      //Agregar un tiempo de 5 segudnos antes de mandarlo de vuelta al login
+      setTimeout(() => {
+        navigate("/");
+      }, 5000);
     } catch (err) {
       if (err.response && err.response.status === 401) {
         toast.error(err.response.data.message || "Error de autenticación");

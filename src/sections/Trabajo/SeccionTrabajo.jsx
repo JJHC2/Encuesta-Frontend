@@ -13,7 +13,6 @@ const SeccionTrabajo = ({ formData, HandleInputChange }) => {
           Trayectoria Profesional
         </Typography>
 
-        
         <Grid container spacing={3} direction="row">
           <Grid item xs={12} md={6}>
             <PreguntaRadioGroup
@@ -24,10 +23,32 @@ const SeccionTrabajo = ({ formData, HandleInputChange }) => {
             />
           </Grid>
 
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" gutterBottom>
-              14. Califica del 1 (nada importante o no influyente) al 5 (muy importante o muy influyente) las razones o los factores que hicieron que te contratarán: (excepto becarios, autónomos por cuenta propia y dueños de negocio propio o familiar)
-            </Typography>
+          <Grid item xs={12}>
+            <Box
+              sx={{
+                padding: 2,
+                backgroundColor: "background.paper",
+                border: 1,
+                borderColor: "divider",
+                borderRadius: 1,
+                boxShadow: 1,
+              }}
+            >
+              <Typography
+                variant="h6"
+                gutterBottom
+                sx={{
+                  fontSize: {
+                    xs: "1rem", // tamaño de texto en pantallas pequeñas
+                    sm: "1.2rem", // tamaño de texto en pantallas medianas
+                    md: "1.5rem", // tamaño de texto en pantallas grandes
+                  },
+                  wordBreak: "break-word", // para evitar que el texto se salga de la card
+                }}
+              >
+                14. Califica del 1 (nada importante o no influyente) al 5 (muy importante o muy influyente) las razones o los factores que hicieron que te contratarán: (excepto becarios, autónomos por cuenta propia y dueños de negocio propio o familiar)
+              </Typography>
+            </Box>
           </Grid>
 
           {/* Las siguientes preguntas estarán en una fila horizontal */}

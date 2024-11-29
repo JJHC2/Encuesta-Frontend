@@ -7,7 +7,7 @@ const SeccionDatosTrabajo = ({ formData, HandleInputChange }) => {
     <Box sx={{ padding: 3 }}>
       <Paper elevation={3} sx={{ padding: 4 }}>
         <Typography variant="h5" gutterBottom sx={{ marginBottom: 3 }}>
-          15. Nombre de la empresa, institución u organismo donde laboras
+          15. Nombre de la empresa, institución u organismo donde laboras o realizaste estadias (caso que no trabajes)
         </Typography>
         <TextField
           fullWidth

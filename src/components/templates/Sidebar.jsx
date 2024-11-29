@@ -10,7 +10,7 @@ import {
   Assignment,
   ExitToApp,
 } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "../../assets/image/cuervo.png";
 
 const Sidebar = ({
@@ -21,87 +21,144 @@ const Sidebar = ({
   logout,
   role,
 }) => {
+  const location = useLocation();
+
+  const styles = {
+    sidebar: {
+      background: "linear-gradient(135deg, #2e7d32, #388e3c)", 
+      height: "100vh",
+      padding: "20px",
+      color: "#fff", 
+      boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)", 
+    },
+    logoContainer: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      marginBottom: 20,
+    },
+    logo: {
+      width: 80,
+      height: "auto",
+    },
+    listItem: {
+      borderRadius: "8px",
+      padding: "10px 15px",
+      transition: "background-color 0.3s ease",
+      marginBottom: "10px",
+      color: "white",
+      display: "flex",
+      alignItems: "center",
+      "&:hover": {
+        backgroundColor: "rgba(255, 255, 255, 0.2)",
+      },
+    },
+    icon: {
+      color: "#ffffff",
+      marginRight: "10px",
+    },
+    nestedItem: {
+      paddingLeft: 30,
+      fontSize: "0.9rem", 
+    },
+    divider: {
+      backgroundColor: "rgba(255, 255, 255, 0.3)",
+      margin: "15px 0",
+    },
+    expandIcon: {
+      color: "#ffffff", 
+    },
+  };
+
   return (
-    <List>
-      {/* Logo */}
-      <ListItem>
-        <img
-          src={Logo}
-          alt="Logo"
-          style={{ width: 100, height: "auto", marginBottom: 20 }}
-        />
-      </ListItem>
+    <div style={styles.sidebar}>
+      <div style={styles.logoContainer}>
+        <img src={Logo} alt="Logo" style={styles.logo} />
+      </div>
 
-      <ListItem button component={Link} to="/">
-        <Dashboard color="primary" />
-        <ListItemText primary="Dashboard" sx={{ marginLeft: 2 }} />
-      </ListItem>
-
-      <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
-
-      {/* Menú de Usuarios */}
-      {(role === 1 || role === 3 || role === 4) && (
-        <ListItem button onClick={toggleUsersMenu}>
-          <People color="primary" />
-          <ListItemText primary="Usuarios" sx={{ marginLeft: 2 }} />
-          {openUsers ? <ExpandLess /> : <ExpandMore />}
+      <List>
+        {/* Dashboard */}
+        <ListItem button component={Link} to="/" sx={styles.listItem}>
+          <Dashboard style={styles.icon} />
+          <ListItemText primary="Dashboard" sx={{ marginLeft: 2, color: "#fff" }} />
         </ListItem>
-      )}
 
-      <Collapse in={openUsers} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem
-            button
-            component={Link}
-            to="/gestion"
-            sx={{ paddingLeft: 4 }}
-          >
-            <Visibility color="secondary" />
-            <ListItemText primary="View Users" sx={{ marginLeft: 2 }} />
+        <Divider sx={styles.divider} />
+
+        {/* Menú de Usuarios */}
+        {(role === 1 || role === 3 || role === 4) && (
+          <ListItem button onClick={toggleUsersMenu} sx={styles.listItem}>
+            <People style={styles.icon} />
+            <ListItemText primary="Usuarios" sx={{ marginLeft: 2, color: "#fff" }} />
+            {openUsers ? (
+              <ExpandLess style={styles.expandIcon} />
+            ) : (
+              <ExpandMore style={styles.expandIcon} />
+            )}
           </ListItem>
-          {role === 1 && (
+        )}
+
+        <Collapse in={openUsers} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
             <ListItem
               button
               component={Link}
-              to="/admin/add"
-              sx={{ paddingLeft: 4 }}
+              to="/gestion"
+              sx={{ marginBottom: 1,color: "#ffffff" }}
             >
-              <PersonAdd color="secondary" />
-              <ListItemText primary="Create User" sx={{ marginLeft: 2 }} />
+              <Visibility style={styles.icon} />
+              <ListItemText  primary="View Users" sx={{ marginLeft: 2 , color: "#fffffff"}} />
             </ListItem>
+            {role === 1 && (
+              <ListItem
+                button
+                component={Link}
+                to="/admin/add"
+                sx={{ marginBottom: 1,color: "#ffffff" }}
+              >
+                <PersonAdd style={styles.icon} />
+                <ListItemText primary="Create User" sx={{ color: "#ffffff",marginLeft: 2 }} />
+              </ListItem>
+            )}
+          </List>
+        </Collapse>
+
+        {/* Menú Encuestas */}
+        <ListItem button onClick={toggleSurveyMenu} sx={styles.listItem}>
+          <Assignment style={styles.icon} />
+          <ListItemText primary="Encuestas" sx={{ marginLeft: 2, color: "#ffffff" }} />
+          {openSurvey ? (
+            <ExpandLess style={styles.expandIcon} />
+          ) : (
+            <ExpandMore style={styles.expandIcon} />
           )}
-        </List>
-      </Collapse>
+        </ListItem>
 
-      {/* Menú Encuestas */}
-      <ListItem button onClick={toggleSurveyMenu}>
-        <Assignment color="primary" />
-        <ListItemText primary="Encuestas" sx={{ marginLeft: 2 }} />
-        {openSurvey ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
+        <Collapse in={openSurvey} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItem
+              button
+              component={Link}
+              to="/gestion/encuesta"
+              sx={{ marginBottom: 1 }}
+            >
+              <Visibility style={styles.icon} />
+              <ListItemText primary="Encuestas" sx={{ marginLeft: 2 }} />
+            </ListItem>
+          </List>
+        </Collapse>
 
-      <Collapse in={openSurvey} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem
-            button
-            component={Link}
-            to="/gestion/encuesta"
-            sx={{ paddingLeft: 4 }}
-          >
-            <Visibility color="secondary" />
-            <ListItemText primary="Encuestas" sx={{ marginLeft: 2 }} />
+        <Divider sx={styles.divider} />
+
+        {/* Cerrar sesión */}
+        {location.pathname === "/admin" && (
+          <ListItem button onClick={logout} sx={styles.listItem}>
+            <ExitToApp style={styles.icon} />
+            <ListItemText primary="Logout" sx={{ marginLeft: 2, color: "#fff" }} />
           </ListItem>
-        </List>
-      </Collapse>
-
-      <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
-
-      {/* Cerrar sesión  */}
-      <ListItem button onClick={logout}>
-        <ExitToApp color="primary" />
-        <ListItemText primary="Logout" sx={{ marginLeft: 2 }} />
-      </ListItem>
-    </List>
+        )}
+      </List>
+    </div>
   );
 };
 

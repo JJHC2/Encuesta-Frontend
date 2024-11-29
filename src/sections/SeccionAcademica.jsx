@@ -6,7 +6,7 @@ const SeccionAcademica = ({ formData, HandleInputChange }) => {
   return (
     <Box sx={{ padding: 3 }}>
       <Paper elevation={3} sx={{ padding: 4 }}>
-        <Typography variant="h6" gutterBottom sx={{ marginBottom: 2 }}>
+        <Typography variant="h6" gutterBottom sx={{ marginBottom: 2, textAlign: 'justify'}}>
           El presente cuestionario servirá para mejorar los planes de estudio, y ayudará en la toma de decisiones para la evaluación curricular. Por lo que agradecemos tanto de la veracidad de tus respuestas, como del tiempo dedicado en ello.
         </Typography>
         <Typography variant="h6" sx={{ marginBottom: 3 }}>

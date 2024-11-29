@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -9,17 +9,20 @@ import {
   CssBaseline,
   Drawer,
   Box,
-  Button,
+  Container,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
+  Button,
+  Grid,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Sidebar from "./templates/Sidebar";
+import { toast, ToastContainer } from "react-toastify";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 
@@ -36,10 +39,15 @@ const ViewUser = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const response = await axios.get(`${BACKEND_URL}/admin/users/${id}`, {
-        headers: { token: localStorage.token },
-      });
-      setData(response.data);
+      try {
+        const response = await axios.get(`${BACKEND_URL}/admin/users/${id}`, {
+          headers: { token: localStorage.token },
+        });
+        setData(response.data);
+      } catch (error) {
+        toast.error("Error al cargar los detalles del usuario");
+        console.error("Error al cargar usuario:", error);
+      }
     };
     fetchUser();
   }, [id]);
@@ -47,7 +55,7 @@ const ViewUser = () => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed">
+      <AppBar position="fixed" sx={{ backgroundColor: "#ffffff", color: "#2e7d32" }}>
         <Toolbar>
           <IconButton color="inherit" edge="start" onClick={toggleSidebar}>
             <MenuIcon />
@@ -69,39 +77,43 @@ const ViewUser = () => {
       </Drawer>
 
       <Box component="main" sx={{ flexGrow: 1, p: 3, mt: 8 }}>
-        <Typography variant="h4" component="h2" gutterBottom>
-          Detalles del Usuario
-        </Typography>
-        <Button
-          component={Link}
-          to="/gestion"
-          variant="contained"
-          color="secondary"
-          sx={{ mb: 2 }}
-        >
-          Regresar
-        </Button>
-        
-        <TableContainer component={Paper} sx={{ mt: 2, boxShadow: 3 }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell align="center" variant="head">Usuario</TableCell>
-                <TableCell align="center" variant="head">Email</TableCell>
-                <TableCell align="center" variant="head">Matrícula</TableCell>
-                <TableCell align="center" variant="head">Rol</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell align="center">{data.user_name}</TableCell>
-                <TableCell align="center">{data.user_email}</TableCell>
-                <TableCell align="center">{data.user_matricula}</TableCell>
-                <TableCell align="center">{data.role_name}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <Container maxWidth="md">
+          <Paper elevation={3} sx={{ padding: 3, borderRadius: 2, backgroundColor: "#f9fbe7" }}>
+            <Typography variant="h4" component="h2" gutterBottom color="#2e7d32">
+              Detalles del Usuario
+            </Typography>
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{ mb: 2 }}
+              href="/gestion"
+            >
+              Regresar
+            </Button>
+
+            <TableContainer component={Paper} sx={{ mt: 2, boxShadow: 3 }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="center" variant="head">Usuario</TableCell>
+                    <TableCell align="center" variant="head">Email</TableCell>
+                    <TableCell align="center" variant="head">Matrícula</TableCell>
+                    <TableCell align="center" variant="head">Rol</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell align="center">{data.user_name}</TableCell>
+                    <TableCell align="center">{data.user_email}</TableCell>
+                    <TableCell align="center">{data.user_matricula}</TableCell>
+                    <TableCell align="center">{data.role_name}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </Container>
+        <ToastContainer />
       </Box>
     </Box>
   );

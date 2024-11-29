@@ -9,17 +9,14 @@ import GenerateExcel from "../libs/Excel/GenerateExcel";
 import AcademicoChart from "../libs/AcademicoChart";
 import PDFacademico from "../libs/PDF/PDFacademico";
 
-const Charts = ({ jobData, encuesta, seccionData, academicData }) => {
+const Charts = ({ jobData, encuesta, seccionData, academicData, role }) => {
   const handleGeneratePDF = () => {
     if (!jobData || !encuesta) {
       toast.error("Datos insuficientes para generar el PDF.");
       return;
     }
 
-    console.log("Datos a generar PDF:", jobData, encuesta);
     const toastId = toast.loading("Generando PDF...");
-
-    // Generar el PDF
     generatePDF(jobData, encuesta)
       .then(() => {
         toast.update(toastId, {
@@ -40,7 +37,7 @@ const Charts = ({ jobData, encuesta, seccionData, academicData }) => {
       });
   };
 
-  const HandleGeneratePDFacademico = useCallback(() => {
+  const handleGeneratePDFacademico = useCallback(() => {
     if (!academicData) {
       toast.error("Datos insuficientes para generar el PDF.");
       return;
@@ -66,14 +63,13 @@ const Charts = ({ jobData, encuesta, seccionData, academicData }) => {
       });
   }, [academicData]);
 
-  const HandleGenerateExcel = useCallback(() => {
+  const handleGenerateExcel = useCallback(() => {
     if (!seccionData) {
       toast.error("Datos insuficientes para generar el Excel.");
       return;
     }
 
     const toastId = toast.loading("Generando Excel...");
-
     GenerateExcel(seccionData)
       .then(() => {
         toast.update(toastId, {
@@ -99,108 +95,136 @@ const Charts = ({ jobData, encuesta, seccionData, academicData }) => {
       <ToastContainer />
       <Grid container spacing={3} style={{ marginTop: "20px" }}>
         <Grid item xs={12} sm={6}>
-          <Card sx={{ borderRadius: 2, boxShadow: 3 }}>
+          <Card
+            sx={{
+              borderRadius: 2,
+              boxShadow: 3,
+              backgroundColor: "white",
+              border: "1px solid #4caf50",
+              "&:hover": {
+                boxShadow: 6,
+                transform: "translateY(-5px)",
+              },
+              transition: "all 0.3s ease",
+            }}
+          >
             <CardContent>
-              <Typography variant="h6" gutterBottom>
+              <Typography variant="h6" gutterBottom color="primary">
                 Gráfico de Trabajo
               </Typography>
-              {jobData &&
-              (jobData.yes?.length > 0 || jobData.no?.length > 0) ? (
-                <>
-                  <div id="pdf-pie-chart">
-                    <JobCharts jobData={jobData} />
-                  </div>
-                  <Button
-                    onClick={handleGeneratePDF}
-                    variant="contained"
-                    color="error"
-                    startIcon={<i className="fa-solid fa-file-pdf"></i>}
-                  >
-                    PDF
-                  </Button>
-                </>
-              ) : (
-                <Typography
-                  variant="body1"
-                  align="center"
-                  color="textSecondary"
+              <div id="pdf-pie-chart">
+                <JobCharts jobData={jobData} />
+              </div>
+              {jobData && encuesta && (
+                <Button
+                  onClick={handleGeneratePDF}
+                  variant="contained"
+                  color="success"
+                  startIcon={<i className="fa-solid fa-file-pdf"></i>}
+                  sx={{
+                    marginTop: 2,
+                    borderRadius: 2,
+                    "&:hover": {
+                      backgroundColor: "#388e3c",
+                    },
+                  }}
                 >
-                  No hay datos por mostrar
-                </Typography>
+                  PDF
+                </Button>
               )}
             </CardContent>
           </Card>
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          <Card sx={{ borderRadius: 2, boxShadow: 3 }}>
+          <Card
+            sx={{
+              borderRadius: 2,
+              boxShadow: 3,
+              backgroundColor: "white",
+              border: "1px solid #4caf50",
+              "&:hover": {
+                boxShadow: 6,
+                transform: "translateY(-5px)",
+              },
+              transition: "all 0.3s ease",
+            }}
+          >
             <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Respuestas por seccion
+              <Typography variant="h6" gutterBottom color="primary">
+                Respuestas por sección
               </Typography>
-              {seccionData && seccionData.length > 0 ? (
-                <>
-                  <SeccionChart seccionData={seccionData} />
-                  <Button
-                    onClick={HandleGenerateExcel}
-                    variant="contained"
-                    color="success"
-                    startIcon={<i className="fa-solid fa-file-excel"></i>}
-                  >
-                    EXCEL
-                  </Button>
-                </>
-              ) : (
-                <Typography
-                  variant="body1"
-                  align="center"
-                  color="textSecondary"
+              <SeccionChart seccionData={seccionData} />
+              {seccionData && (
+                <Button
+                  onClick={handleGenerateExcel}
+                  variant="contained"
+                  color="success"
+                  startIcon={<i className="fa-solid fa-file-excel"></i>}
+                  sx={{
+                    marginTop: 2,
+                    borderRadius: 2,
+                    "&:hover": {
+                      backgroundColor: "#388e3c",
+                    },
+                  }}
                 >
-                  No hay datos por mostrar
-                </Typography>
+                  EXCEL
+                </Button>
               )}
             </CardContent>
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={6}>
-          <Card sx={{ borderRadius: 2, boxShadow: 3 }}>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Evaluación Académica
-              </Typography>
-              {academicData && academicData.length > 0 ? (
-                <>
-                  <AcademicoChart academicData={academicData} />
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-evenly",
-                      marginTop: 16,
-                    }}
-                  >
+        {role !== 4 && (
+          <Grid item xs={12} sm={6}>
+            <Card
+              sx={{
+                borderRadius: 2,
+                boxShadow: 3,
+                backgroundColor: "white",
+                border: "1px solid #4caf50",
+                "&:hover": {
+                  boxShadow: 6,
+                  transform: "translateY(-5px)",
+                },
+                transition: "all 0.3s ease",
+              }}
+            >
+              <CardContent>
+                <Typography variant="h6" gutterBottom color="primary">
+                  Evaluación Académica
+                </Typography>
+                <AcademicoChart academicData={academicData} />
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-evenly",
+                    marginTop: 16,
+                  }}
+                >
+                  {academicData && (
                     <Button
-                      onClick={HandleGeneratePDFacademico}
+                      onClick={handleGeneratePDFacademico}
                       variant="contained"
-                      color="error"
+                      color="success"
                       startIcon={<i className="fa-solid fa-file-pdf"></i>}
+                      sx={{
+                        marginTop: 2,
+                        borderRadius: 2,
+                        "&:hover": {
+                          backgroundColor: "#388e3c",
+                        },
+                      }}
                     >
                       PDF
                     </Button>
-                  </div>
-                </>
-              ) : (
-                <Typography
-                  variant="body1"
-                  align="center"
-                  color="textSecondary"
-                >
-                  No hay datos por mostrar
-                </Typography>
-              )}
-            </CardContent>
-          </Card>
-        </Grid>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </Grid>
+        )}
       </Grid>
     </div>
   );

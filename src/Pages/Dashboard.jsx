@@ -373,7 +373,7 @@ const Dashboard = ({ setAuth }) => {
                   <Button
                     size="small"
                     component="a"
-                    href="https://goo.gl/maps/NTz7d34cP6Nn5rn57"
+                    href="https://maps.app.goo.gl/nZzXNpsfJsNvqbet8"
                     target="_blank"
                     variant="contained"
                     color="primary"

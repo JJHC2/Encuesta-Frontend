@@ -43,7 +43,7 @@ const Register = ({ setAuth }) => {
       
       setTimeout(() => {
         navigate("/");
-      }, 5000);
+      }, 2000);
     } catch (err) {
       if (err.response && err.response.status === 401) {
         toast.error(err.response.data.message || "Error de autenticación");

@@ -10,7 +10,7 @@ const SeccionServicios = ({ formData, HandleInputChange }) => {
           4. En tu opinión, ¿cómo calificarías a la UTVT en cuanto a los siguientes aspectos de servicios? *
         </Typography>
 
-        <Grid container spacing={4}>
+        <Grid container sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
           <Grid item xs={12}>
             <PreguntaRadioGroup
               pregunta="Servicios de Biblioteca"

@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, TextField, Paper} from "@mui/material";
+import { Box, Typography, TextField, Paper } from "@mui/material";
 import PreguntaRadioGroup from "../../components/Encuesta/PreguntaRadioGroup";
 
 const SeccionDatosTrabajo = ({ formData, HandleInputChange }) => {
@@ -19,25 +19,31 @@ const SeccionDatosTrabajo = ({ formData, HandleInputChange }) => {
           sx={{ marginBottom: 2 }}
         />
 
-        <PreguntaRadioGroup
-          pregunta="16. Régimen jurídico al que pertenece la empresa, institución u organización en la que trabajas:"
-          opciones={[
-            "Sector Público",
-            "Sector Privado",
-            "Sector Social(ONG,Patronato)",
-            "Autoempleados",
-            "Empresa Propia",
-          ]}
-          seleccion={formData.regimen}
-          onChange={(respuesta) => HandleInputChange("regimen", respuesta)}
-        />
+        {/* Pregunta 16 en horizontal */}
+        <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2, marginBottom: 2 }}>
+          <PreguntaRadioGroup
+            pregunta="16. Régimen jurídico al que pertenece la empresa, institución u organización en la que trabajas:"
+            opciones={[
+              "Sector Público",
+              "Sector Privado",
+              "Sector Social(ONG,Patronato)",
+              "Autoempleados",
+              "Empresa Propia",
+            ]}
+            seleccion={formData.regimen}
+            onChange={(respuesta) => HandleInputChange("regimen", respuesta)}
+          />
+        </Box>
 
-        <PreguntaRadioGroup
-          pregunta="17. Indica el nivel de relación que tienen las actividades laborales que desempeñas con tu formación profesional"
-          opciones={["20%", "40%", "60%", "80%", "100%"]}
-          seleccion={formData.actividadeslaborales}
-          onChange={(respuesta) => HandleInputChange("actividadeslaborales", respuesta)}
-        />
+        {/* Pregunta 17 en horizontal */}
+        <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2, marginBottom: 2 }}>
+          <PreguntaRadioGroup
+            pregunta="17. Indica el nivel de relación que tienen las actividades laborales que desempeñas con tu formación profesional"
+            opciones={["20%", "40%", "60%", "80%", "100%"]}
+            seleccion={formData.actividadeslaborales}
+            onChange={(respuesta) => HandleInputChange("actividadeslaborales", respuesta)}
+          />
+        </Box>
 
         <Typography variant="h6" sx={{ marginTop: 3 }}>
           18. Indica el mes y año de la contratación de tu empleo actual

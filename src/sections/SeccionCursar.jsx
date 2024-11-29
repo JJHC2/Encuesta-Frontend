@@ -10,7 +10,7 @@ const SeccionCursar = ({ formData, HandleInputChange }) => {
           6.- Si tuvieras que cursar nuevamente tu licenciatura u otra, ¿Eligirías inscribirte en la UTVT?
         </Typography>
 
-        <Grid container spacing={4}>
+        <Grid container sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
           <Grid item xs={12}>
             <PreguntaRadioGroup
               pregunta="Selecciona una opción"

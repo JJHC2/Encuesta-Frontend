@@ -10,7 +10,7 @@ const SeccionProgramas = ({ formData, HandleInputChange }) => {
           3. En tu opinión, ¿cómo calificarías a la UTVT en cuanto a los siguientes aspectos de programas?
         </Typography>
 
-        <Grid container spacing={4}>
+        <Grid container sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
           <Grid item xs={12}>
             <PreguntaRadioGroup
               pregunta="Programa de Tutoria Academica"

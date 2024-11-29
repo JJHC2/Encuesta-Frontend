@@ -10,7 +10,7 @@ const SeccionGradoSatisfaccion = ({ formData, HandleInputChange }) => {
           ¿Cuál es tu grado de satisfacción? respecto a:
         </Typography>
 
-        <Grid container spacing={4}>
+        <Grid container sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
           <Grid item xs={12}>
             <PreguntaRadioGroup
               pregunta="El desarrollo de tu carrera profesional"

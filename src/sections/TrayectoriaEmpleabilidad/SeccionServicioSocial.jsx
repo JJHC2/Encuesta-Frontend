@@ -14,25 +14,22 @@ const SeccionServicioSocial = ({ formData, HandleInputChange }) => {
           7.- Servicio social y prácticas profesionales
         </Typography>
 
-        <Grid container spacing={4}>
-          <Grid item xs={12}>
+        {/* Contenedor Grid en modo horizontal */}
+        <Grid container spacing={4} sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
+          <Grid item xs={12} sm={6} md={4}>
             <PreguntaRadioGroup
               pregunta="El servicio social estuvo de acuerdo con tu perfil profesional"
               opciones={["Si", "No"]}
               seleccion={formData.serviciosocial}
-              onChange={(respuesta) =>
-                HandleInputChange("serviciosocial", respuesta)
-              }
+              onChange={(respuesta) => HandleInputChange("serviciosocial", respuesta)}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6} md={4}>
             <PreguntaRadioGroup
               pregunta="Las prácticas profesionales fueron de acuerdo con tu perfil"
               opciones={["Si", "No"]}
               seleccion={formData.practicas}
-              onChange={(respuesta) =>
-                HandleInputChange("practicas", respuesta)
-              }
+              onChange={(respuesta) => HandleInputChange("practicas", respuesta)}
             />
           </Grid>
         </Grid>

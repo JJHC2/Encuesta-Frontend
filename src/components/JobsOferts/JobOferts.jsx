@@ -3,6 +3,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import JobCard from "./Components/JobCard";
 import "./styles/JobOferts.css";
+import { Typography, Button, Box } from "@mui/material";
+const BACKEND_URL =
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 const JobOferts = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -10,23 +13,62 @@ const JobOferts = () => {
   const [totalResults, setTotalResults] = useState(0);
   const [currentJobs, setCurrentJobs] = useState([]);
   const navigate = useNavigate();
+  const [respondido, setRespondido] = useState(false);
+
+  useEffect(() => {
+    const checkResponses = async () => {
+      const res = await fetch(`${BACKEND_URL}/dashboard/encuesta/check`, {
+        method: "GET",
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setRespondido(data.responded);
+      }
+    };
+
+    checkResponses();
+  }, []);
 
   const fetchJobs = () => {
-    setLoading(true);
-    const url = `https://jobicy.com/api/v2/remote-jobs?count=50&geo=mexico`;
+    if (respondido === true) {
+      setLoading(true);
+      const url = `https://jobicy.com/api/v2/remote-jobs?count=50&geo=mexico`;
 
-    axios
-      .get(url)
-      .then((response) => {
-        const results = response.data.jobs || [];
-        setJobs(results);
-        setTotalResults(results.length);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error al obtener los datos:", error);
-        setLoading(false);
-      });
+      axios
+        .get(url)
+        .then((response) => {
+          const results = response.data.jobs || [];
+          setJobs(results);
+          setTotalResults(results.length);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error al obtener los datos:", error);
+          setLoading(false);
+        });
+    } else {
+      return (
+        <div className="container my-5">
+          <Box sx={{ textAlign: "center", mt: 4 }}>
+            <Typography variant="h4" color="success" paragraph>
+              Primero Responde la Encuesta para Ver los trabajos disponibles.
+              Gracias.
+            </Typography>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => navigate("/dashboard")}
+            >
+              Regresar al Dashboard
+            </Button>
+          </Box>
+        </div>
+      );
+    }
   };
 
   useEffect(() => {

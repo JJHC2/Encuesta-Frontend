@@ -80,7 +80,7 @@ const JobOferts = () => {
       <div className="header">
         <h1 className="title">Trabajos Disponibles</h1>
         <p className="subtitle">Encuentra tu próximo empleo remoto en México</p>
-        {/*BOTON REGRSAR AL DASHBOARD */}
+        {/*BOTON REGRESAR AL DASHBOARD */}
         <button
           onClick={() => {
             console.log("Redirigiendo al Dashboard...");
@@ -122,7 +122,7 @@ const JobOferts = () => {
   }else{
     return (
       <div className="container my-5">
-      <Box sx={{ textAlign: "center", mt: 4 }}>
+      <Box sx={{ textAlign: "center", mt: 4, alignItems: "center", justifyContent:"center"}}>
         <Typography variant="h4" color="success" paragraph>
           Para ver los trabajos disponibles responde la encuesta. Gracias.
         </Typography>

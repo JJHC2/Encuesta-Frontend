@@ -126,16 +126,14 @@ const JobOferts = () => {
       <div className="container my-5">
         <Box
           sx={{
-            display: "absolute",
+            position: "fixed",
             top: "50%",
             left: "50%",
-            transform: "translate(-50%,-50%)",
+            transform: "translate(-50%, -50%)",
             textAlign: "center",
             width: "100%",
-            padding: "20px"
           }}
         >
-         
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -150,7 +148,6 @@ const JobOferts = () => {
             <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
           </svg>
 
-        
           <Typography
             variant="h4"
             sx={{
@@ -162,7 +159,6 @@ const JobOferts = () => {
             Para ver los trabajos disponibles responde la encuesta. ¡Gracias!
           </Typography>
 
-        
           <Button
             variant="contained"
             color="success"

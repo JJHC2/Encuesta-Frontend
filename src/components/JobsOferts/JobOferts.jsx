@@ -126,15 +126,15 @@ const JobOferts = () => {
       <div className="container my-5">
         <Box
           sx={{
-            textAlign: "center",
-            mt: 4,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
+            textAlign: "center",
+            minHeight: "80vh", 
           }}
         >
-       
+         
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -142,29 +142,36 @@ const JobOferts = () => {
             style={{
               width: "150px",
               height: "150px",
-              color: "#2e7d32", 
+              color: "#2e7d32",
               marginBottom: "20px",
             }}
           >
-            <path d="M21 3H3C1.9 3 1 3.9 1 5v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14H5v-2h7v2zm4-4H5v-2h11v2zm0-4H5V7h11v2z" />
+            <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
           </svg>
 
-          
-          <Typography variant="h4" color="success" paragraph>
+        
+          <Typography
+            variant="h4"
+            sx={{
+              color: "#2e7d32",
+              fontWeight: "bold",
+              marginBottom: "20px",
+            }}
+          >
             Para ver los trabajos disponibles responde la encuesta. ¡Gracias!
           </Typography>
 
-          
+        
           <Button
             variant="contained"
             color="success"
             size="large"
             sx={{
-              mt: 2,
               px: 4,
               py: 1,
               fontSize: "16px",
               fontWeight: "bold",
+              textTransform: "uppercase",
             }}
             onClick={() => navigate("/dashboard")}
           >

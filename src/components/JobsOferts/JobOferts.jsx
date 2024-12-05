@@ -34,7 +34,6 @@ const JobOferts = () => {
   }, []);
 
   const fetchJobs = () => {
-    if (respondido === true) {
       setLoading(true);
       const url = `https://jobicy.com/api/v2/remote-jobs?count=50&geo=mexico`;
 
@@ -50,25 +49,6 @@ const JobOferts = () => {
           console.error("Error al obtener los datos:", error);
           setLoading(false);
         });
-    } else {
-      return (
-        <div className="container my-5">
-          <Box sx={{ textAlign: "center", mt: 4 }}>
-            <Typography variant="h4" color="success" paragraph>
-              Primero Responde la Encuesta para Ver los trabajos disponibles.
-              Gracias.
-            </Typography>
-            <Button
-              variant="contained"
-              color="success"
-              onClick={() => navigate("/dashboard")}
-            >
-              Regresar al Dashboard
-            </Button>
-          </Box>
-        </div>
-      );
-    }
   };
 
   useEffect(() => {
@@ -94,8 +74,9 @@ const JobOferts = () => {
   const resultsPerPage = 10;
   const totalPages = Math.ceil(totalResults / resultsPerPage);
 
-  return (
-    <div className="mainContainer">
+  if(respondido === true){
+    return (
+      <div className="mainContainer">
       <div className="header">
         <h1 className="title">Trabajos Disponibles</h1>
         <p className="subtitle">Encuentra tu próximo empleo remoto en México</p>
@@ -137,7 +118,21 @@ const JobOferts = () => {
         </button>
       </div>
     </div>
-  );
+    )
+  }else{
+    return (
+      <div className="container my-5">
+      <Box sx={{ textAlign: "center", mt: 4 }}>
+        <Typography variant="h4" color="success" paragraph>
+          Para ver los trabajos disponibles responde la encuesta. Gracias.
+        </Typography>
+        <Button variant="contained" color="success" onClick={() => navigate("/dashboard")}>
+          Regresar
+        </Button>
+      </Box>
+    </div>
+    )
+  }
 };
 
 export default JobOferts;

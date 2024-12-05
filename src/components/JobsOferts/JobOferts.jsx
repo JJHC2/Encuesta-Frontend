@@ -131,8 +131,7 @@ const JobOferts = () => {
             alignItems: "center",
             justifyContent: "center",
             textAlign: "center",
-            minHeight: "100vh", 
-            padding: "20px"
+            minHeight: "100vh"
           }}
         >
          

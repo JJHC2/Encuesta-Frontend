@@ -127,7 +127,7 @@ const JobOferts = () => {
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
+            flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
             textAlign: "center",

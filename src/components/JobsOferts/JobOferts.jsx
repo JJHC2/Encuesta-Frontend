@@ -126,12 +126,13 @@ const JobOferts = () => {
       <div className="container my-5">
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
+            display: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%,-50%)",
             textAlign: "center",
-            minHeight: "100vh"
+            width: "100%",
+            padding: "20px"
           }}
         >
          
